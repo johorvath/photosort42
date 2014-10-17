@@ -1,0 +1,123 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Arsclassica Article
+% LaTeX Template
+% Version 1.1 (10/6/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Lorenzo Pantieri (http://www.lorenzopantieri.net) with extensive modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+10pt, % Main document font size
+a4paper, % Paper type, use 'letterpaper' for US Letter paper
+oneside, % One page layout (no page indentation)
+%twoside, % Two page layout (page indentation for binding and different headers)
+headinclude,footinclude, % Extra spacing for the header and footer
+BCOR5mm, % Binding correction
+]{scrartcl}
+
+\input{structure.tex} % Include the structure.tex file which specified the document structure and layout
+
+\hyphenation{Fortran hy-phen-ation} % Specify custom hyphenation points in words with dashes where you would like hyphenation to occur, or alternatively, don't put any dashes in a word to stop hyphenation altogether
+
+%----------------------------------------------------------------------------------------
+%	TITLE AND AUTHOR(S)
+%----------------------------------------------------------------------------------------
+
+\title{\normalfont\spacedallcaps{Fotos per Gesichtserkennung sortieren}} % The article title
+
+\author{\spacedlowsmallcaps{Johannes Horvath \& Eva Witzel}} % The article author(s) - author affiliations need to be specified in the AUTHOR AFFILIATIONS block
+
+\date{15.10.2014} % An optional date to appear under the author(s)
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	HEADERS
+%----------------------------------------------------------------------------------------
+
+\renewcommand{\sectionmark}[1]{\markright{\spacedlowsmallcaps{#1}}} % The header for all pages (oneside) or for even pages (twoside)
+%\renewcommand{\subsectionmark}[1]{\markright{\thesubsection~#1}} % Uncomment when using the twoside option - this modifies the header on odd pages
+\lehead{\mbox{\llap{\small\thepage\kern1em\color{halfgray} \vline}\color{halfgray}\hspace{0.5em}\rightmark\hfil}} % The header style
+
+\pagestyle{scrheadings} % Enable the headers specified in this block
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS & LISTS OF FIGURES AND TABLES
+%----------------------------------------------------------------------------------------
+
+\maketitle % Print the title/author/date block
+
+\setcounter{tocdepth}{2} % Set the depth of the table of contents to show sections and subsections only
+
+\tableofcontents % Print the table of contents
+
+
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+
+\section*{Einleitung} 
+Ziel des Programmes ist es, Gesichter auf Fotos zu erkennen und dann zu sortieren.
+Die Fotos werden zuerst nach Landschaftsbilder und Fotos mit Personen sortiert. Danach werden die Gesichter der Personen mit einer Maske (Gesicht als Vorlage) abgeglichen, wobei Übereinstimmung ausgegeben werden.
+Dieses Dokument sammelt dazu erste Ideen und Anforderungen.
+
+\section{Produktbeschreibung} 
+\subsection{Problemstellung}
+In einem Urlaub mit Freunden entstehen meistens viele Fotos. Dabei ist es manchmal hilfreich zwischen verschiedenen Arten der Motive, wie z.B. Portrait-, Gruppenfotos oder Landschafts- bzw. Architekturaufnahmen, zu unterscheiden. Außerdem kann es hilfreich sein, die Fotos personenbezogen zu sortieren, das heißt auf den Fotos erkannte Gesichter einer bestimmten Person zu zuordnen. 
+
+\subsection{Produktpositionierung}
+Die benutzerfreundliche GUI bietet jeder Person die Möglichkeit seine Fotos nach den oben genannten Kriterien zu sortieren. Bei der personenbezogenen Sortierung werden die Gesichter mit einer Maske(Gesicht) verglichen und die Übereinstimmungen ausgegeben. Die Daten werden offline ausgewertet und greifen nicht auf online Datenbanken oder Algorithmen zu. Weiterhin wird das Produkt als Open Source zur Verfügung gestellt und der Quellcode offen gelegt.
+
+\subsection{Zielgruppe}
+Das Programm richtet sich an alle Benutzer, die die oben genannten Aspekte in den Sortiervorgang ihrer Fotos einbeziehen wollen.
+
+\section{Anforderungen und Features}
+\begin{itemize}
+\item benutzerfreundliche GUI
+\item verschiedene Sortieroptionen
+\begin{itemize}
+\item Unterscheidung der Motive
+\item Unterscheidung zwischen Einzel- und Gruppenfotos
+\item Bilder einzelnen Personen zuordnen
+\item Gesichtsvorlage aus einer Datei oder aus einem Webcamstream
+\item gefilterte Fotoauswahl entweder als Text mit Dateinamen ausgeben oder direkt kopieren
+\end{itemize}
+\item zuverlässige Gesichtserkennung
+\item Auswertung offline
+\item optional:
+\begin{itemize}
+\item Datenbank mit bereits erkannten Gesichtern erstellen
+\item Automatische Erkennung anhand der Datenbank
+\end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\renewcommand{\refname}{\spacedlowsmallcaps{References}} % For modifying the bibliography heading
+
+\bibliographystyle{unsrt}
+
+\bibliography{sample.bib} % The file containing the bibliography
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
