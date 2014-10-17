@@ -2,3 +2,7 @@
 *.*~
 *.pro.user
 *.log
+*.aux
+*.out
+*.synctex.gz
+*toc
