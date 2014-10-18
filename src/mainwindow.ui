@@ -47,7 +47,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Sortieren</string>
+     <string>sort</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit_compareInput">
@@ -106,7 +106,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>Sortiermechanismus</string>
+     <string>sort mechanism</string>
     </property>
     <widget class="QCheckBox" name="checkBox_landscape">
      <property name="geometry">
@@ -118,7 +118,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Landschafts - &amp; Architekturaufnahmen</string>
+      <string>landscape photos</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBox_onePerson">
@@ -131,7 +131,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Aufnahmen einer Einzelperson</string>
+      <string>photo of single person</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBox_group">
@@ -144,7 +144,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Gruppenbilder</string>
+      <string>group photo</string>
      </property>
     </widget>
    </widget>
