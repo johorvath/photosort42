@@ -19,7 +19,7 @@
      <rect>
       <x>20</x>
       <y>0</y>
-      <width>151</width>
+      <width>71</width>
       <height>31</height>
      </rect>
     </property>
@@ -34,7 +34,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>String für Pfadangabe des zu bearbeitenden Bilderordner</string>
+     <string>select photos from a folder</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_sort">
@@ -55,7 +55,7 @@
      <rect>
       <x>20</x>
       <y>50</y>
-      <width>151</width>
+      <width>71</width>
       <height>31</height>
      </rect>
     </property>
@@ -70,7 +70,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>String für Pfadangabe des Vergleichbildes</string>
+     <string>choose a comparative picture of a person</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit_output">
@@ -93,7 +93,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>String für Ausgabepfad</string>
+     <string>output folder</string>
     </property>
    </widget>
    <widget class="QGroupBox" name="groupBox">
@@ -147,6 +147,45 @@
       <string>group photo</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton_photoInput">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>0</y>
+      <width>71</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Browse</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_compareInput">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>50</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Browse</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_compareImage">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>100</y>
+      <width>111</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
