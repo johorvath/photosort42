@@ -8,6 +8,8 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+QMAKE_CXXFLAGS += -std=c++11
+
 TARGET = photosort42
 TEMPLATE = app
 
@@ -18,12 +20,13 @@ LIBS += -L/usr/local/boost_1_56_0/lib/ \
 
 LIBS += `pkg-config opencv --libs`
 
-
 SOURCES += main.cpp\
         mainwindow.cpp \
     helper.cpp
 
 HEADERS  += mainwindow.h \
-    helper.hpp
+    helper.hpp \
+    easylogging++.h \
+    easylogging++.h
 
 FORMS    += mainwindow.ui

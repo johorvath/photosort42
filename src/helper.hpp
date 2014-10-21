@@ -3,11 +3,23 @@
 
 #include <string>
 #include <iostream>
+#include <boost/filesystem.hpp>
+#include "easylogging++.h"
+
 
 namespace helper {
 
-    bool check_is_dir ( std::string const& path );
-    bool check_is_file ( std::string const& filename );
+  enum data_type {
+    existing_file,
+    empty_dir,
+    existing_dir,
+    nexisting_dir
+  };
+
+
+  data_type check_input ( std::string const& input );
+  bool check_is_file ( std::string const& filename );
+  bool check_is_dir_empty ( std::string const& path );
 
 }
 
