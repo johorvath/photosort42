@@ -3,14 +3,13 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/core/core.hpp>
 #include <iostream>
-
-using namespace cv;
-using namespace std;
+#include "helper.hpp"
 
 int main(int argc, char *argv[])
 {
+    helper::check_is_dir( "Hallo" );
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
-    return a.exec();
+    return a.exec();    
 }
