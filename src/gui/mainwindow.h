@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <iostream>
+#include "detection/detection.hpp"
+
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +28,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     std::vector < std::string > input_files_;
+    facedetector *facedetect_;
 };
 
 #endif // MAINWINDOW_H

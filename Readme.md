@@ -12,6 +12,7 @@ QT:
 
 TODO
 - file handling (check, etc.)
+- output path handling
 - comment EVERYTHING
 - add logger
 - perhaps not only choose photos but also folder?

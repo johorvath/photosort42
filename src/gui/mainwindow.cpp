@@ -3,11 +3,11 @@
 #include <QFileDialog>
 #include "src/helper.hpp"
 #include "libs/easylogging++.h"
-#include <detection/detection.cpp>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    facedetect_ ( new facedetector )
 {
     ui->setupUi(this);
 
@@ -20,7 +20,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_sort_clicked()       //Sortierbutton
 {
-    test();
+//    facedetect_->detect_face();
 
 }
 
