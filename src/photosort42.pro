@@ -20,13 +20,14 @@ LIBS += -L/usr/local/boost-1.56.0/lib/ \
 
 LIBS += `pkg-config opencv --libs`
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    helper.cpp
+SOURCES += src/main.cpp\
+    gui/mainwindow.cpp \
+    src/helper.cpp \
+    detection/detection.cpp \
 
-HEADERS  += mainwindow.h \
-    helper.hpp \
-    easylogging++.h \
-    easylogging++.h
+HEADERS  += gui/mainwindow.h \
+    src/helper.hpp \
+    libs/easylogging++.h \
+    detection/detection.hpp \
 
-FORMS    += mainwindow.ui
+FORMS    += gui/mainwindow.ui

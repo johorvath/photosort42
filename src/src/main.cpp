@@ -1,9 +1,9 @@
-#include "mainwindow.h"
+#include "gui/mainwindow.h"
 #include <QApplication>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/core/core.hpp>
 #include <iostream>
-#include "easylogging++.h"
+#include "libs/easylogging++.h"
 
 _INITIALIZE_EASYLOGGINGPP
 

@@ -25,6 +25,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    std::vector < std::string > input_files_;
 };
 
 #endif // MAINWINDOW_H
