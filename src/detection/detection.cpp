@@ -1,5 +1,6 @@
 #include "detection.hpp"
 
+
 facedetector::facedetector ():
     face_cascade_name_ ( "haarcascade_frontalface_alt.xml" ),
     eyes_cascade_name_ ( "haarcascade_eye_tree_eyeglasses.xml" )
@@ -19,8 +20,38 @@ facedetector::~facedetector ()
 
 }
 
-void facedetecor::detect_face()
+void facedetector::detect_face( cv::Mat const& img )
 {
+    std::vector<cv::Rect> faces;
+    cv::Mat frame_gray;
+
+    cv::cvtColor( img, frame_gray, cv::COLOR_BGR2GRAY );
+    cv::equalizeHist( frame_gray, frame_gray );
+
+    //-- Detect faces
+    face_cascade_.detectMultiScale( frame_gray, faces, 1.1, 2, 0|cv::CASCADE_SCALE_IMAGE, cv::Size(30, 30) );
+
+    for ( size_t i = 0; i < faces.size(); i++ )
+    {
+        cv::Point center( faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2 );
+//        cv::ellipse( img, center, cv::Size( faces[i].width/2, faces[i].height/2 ), 0, 0, 360, cv::Scalar( 255, 0, 255 ), 4, 8, 0 );
+
+        cv::Mat faceROI = frame_gray( faces[i] );
+        std::vector<cv::Rect> eyes;
+
+        //-- In each face, detect eyes
+        eyes_cascade_.detectMultiScale( faceROI, eyes, 1.1, 2, 0 |cv::CASCADE_SCALE_IMAGE, cv::Size(30, 30) );
+
+        for ( size_t j = 0; j < eyes.size(); j++ )
+        {
+            cv::Point eye_center( faces[i].x + eyes[j].x + eyes[j].width/2, faces[i].y + eyes[j].y + eyes[j].height/2 );
+            int radius = cvRound( (eyes[j].width + eyes[j].height)*0.25 );
+//          cv::circle( frame, eye_center, radius, Scalar( 255, 0, 0 ), 4, 8, 0 );
+        }
+    }
+
+
+
     std::cout << "hallo" << std::endl;
 }
 

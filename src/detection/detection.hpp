@@ -12,7 +12,7 @@ public:
     facedetector();
     ~facedetector();
 
-    void detect_face ();
+    void detect_face (cv::Mat const& img);
 
 
 private:
