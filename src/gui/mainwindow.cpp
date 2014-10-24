@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //DEBUG
     //TODO: remove
     ui->textEdit_photoInput->setText( "/home/johannes/Pictures/dfb.png");
-    ui->textEdit_compareInput->setText( "/home/johannes/Pictures/lahm.png");
+    ui->textEdit_compareInput->setText( "/home/johannes/Pictures/dfb.png");
 }
 
 MainWindow::~MainWindow()
@@ -72,7 +72,7 @@ void MainWindow::on_pushButton_photoInput_clicked()
               "/home/johannes/Pictures",
               "Images (*.png *.xpm *.jpg)" );
 
-    for ( unsigned int i = 0; i < selection.size(); ++i )
+    for ( int i = 0; i < selection.size(); ++i )
     {
         input_files_.push_back( selection[i].toStdString() );
         helper::check_file( input_files_[i] );

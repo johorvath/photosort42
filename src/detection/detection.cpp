@@ -95,8 +95,8 @@ void facedetector::detect_face( cv::Mat& img )
     }
     for ( unsigned int i = 0; i < faces.size(); ++i )
     {
-//        cv::Rect face = faces[i];
-        cv::rectangle( img, faces[i], cv::Scalar(0, 255, 0), 2, 8, 0 );
+        cv::Rect face = faces[i];
+        cv::rectangle( img, face.tl(), face.br() , cv::Scalar(0, 255, 0), 2, 8, 0 );
     }
 
 
