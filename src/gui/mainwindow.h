@@ -29,6 +29,7 @@ private:
     Ui::MainWindow *ui;
     std::vector < std::string > input_files_;
     facedetector *facedetect_;
+    std::string comp_file_;
     cv::Mat comp_img_;
 };
 

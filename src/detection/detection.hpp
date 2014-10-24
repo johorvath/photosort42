@@ -13,13 +13,17 @@ public:
     facedetector( std::string const& test );
     ~facedetector();
 
-    void detect_face (cv::Mat const& img);
+    void detect_face (cv::Mat &img);
 
 
 private:
     std::string face_cascade_name_;
     std::string eyes_cascade_name_;
+    std::string eyes_glass_cascade_name_;
     cv::CascadeClassifier face_cascade_;
     cv::CascadeClassifier eyes_cascade_;
+    cv::CascadeClassifier eyes_glass_cascade_;
+
+    void detectAndDisplay ( cv::Mat const& img );
 
 };

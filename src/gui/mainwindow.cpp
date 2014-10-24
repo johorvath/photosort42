@@ -6,9 +6,15 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    facedetect_ ( new facedetector( "hallo") )
 {
     ui->setupUi(this);
+
+    //DEBUG
+    //TODO: remove
+    ui->textEdit_photoInput->setText( "/home/johannes/Pictures/dfb.png");
+    ui->textEdit_compareInput->setText( "/home/johannes/Pictures/lahm.png");
 }
 
 MainWindow::~MainWindow()
@@ -18,9 +24,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_sort_clicked()       //Sortierbutton
 {
+    comp_file_ = ui->textEdit_compareInput->toPlainText().toStdString();
+    comp_img_ = cv::imread( comp_file_, CV_LOAD_IMAGE_COLOR );
 
     facedetect_->detect_face( comp_img_ );
-
 }
 
 
@@ -44,7 +51,7 @@ void MainWindow::on_pushButton_compareInput_clicked()
         int w = ui->label_compareImage->width();
         int h = ui->label_compareImage->height();
         ui ->label_compareImage->setPixmap( pix.scaled( w, h, Qt::KeepAspectRatio ) );
-        comp_img_ = cv::imread( file_imgOne.toStdString(), CV_LOAD_IMAGE_COLOR );
+        comp_file_ = file_imgOne.toStdString();
     }
 }
 
