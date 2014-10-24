@@ -1,7 +1,7 @@
 #include "detection.hpp"
 
 
-facedetector::facedetector ():
+facedetector::facedetector ( std::string const& test ):
     face_cascade_name_ ( "haarcascade_frontalface_alt.xml" ),
     eyes_cascade_name_ ( "haarcascade_eye_tree_eyeglasses.xml" )
 {
@@ -54,6 +54,8 @@ void facedetector::detect_face( cv::Mat const& img )
 
     std::cout << "hallo" << std::endl;
 }
+
+
 
 
 //using namespace std;

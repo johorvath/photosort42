@@ -1,4 +1,4 @@
-#include "gui/mainwindow.h"
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include "src/helper.hpp"
@@ -6,11 +6,9 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    facedetect_ ( new facedetector )
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
 }
 
 MainWindow::~MainWindow()
@@ -20,7 +18,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_sort_clicked()       //Sortierbutton
 {
-//    facedetect_->detect_face();
+
+    facedetect_->detect_face( comp_img_ );
 
 }
 
@@ -45,6 +44,7 @@ void MainWindow::on_pushButton_compareInput_clicked()
         int w = ui->label_compareImage->width();
         int h = ui->label_compareImage->height();
         ui ->label_compareImage->setPixmap( pix.scaled( w, h, Qt::KeepAspectRatio ) );
+        comp_img_ = cv::imread( file_imgOne.toStdString(), CV_LOAD_IMAGE_COLOR );
     }
 }
 

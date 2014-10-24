@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <iostream>
 #include "detection/detection.hpp"
-
+#include <opencv2/core/core.hpp>
 
 namespace Ui {
 class MainWindow;
@@ -29,6 +29,7 @@ private:
     Ui::MainWindow *ui;
     std::vector < std::string > input_files_;
     facedetector *facedetect_;
+    cv::Mat comp_img_;
 };
 
 #endif // MAINWINDOW_H

@@ -6,10 +6,11 @@
 #include <stdio.h>
 #include "libs/easylogging++.h"
 
+
 class facedetector
 {
 public:
-    facedetector();
+    facedetector( std::string const& test );
     ~facedetector();
 
     void detect_face (cv::Mat const& img);
@@ -20,5 +21,5 @@ private:
     std::string eyes_cascade_name_;
     cv::CascadeClassifier face_cascade_;
     cv::CascadeClassifier eyes_cascade_;
-    
+
 };
