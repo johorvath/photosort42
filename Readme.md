@@ -15,6 +15,8 @@ TODO
 - output path handling
 - comment EVERYTHING
 - add logger
+- talk about detection method/strategy; how many cascades?
+- remove Gtk-WARNING
 - perhaps not only choose photos but also folder?
 - add filedialog for output
 - add explanation about installing needed libs
