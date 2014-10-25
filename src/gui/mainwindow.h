@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <iostream>
-#include "detection/detection.hpp"
+#include "DetectAndRecognize/detection.hpp"
 #include <opencv2/core/core.hpp>
 
 namespace Ui {

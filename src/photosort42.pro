@@ -23,11 +23,13 @@ LIBS += `pkg-config opencv --libs`
 SOURCES += src/main.cpp\
     gui/mainwindow.cpp \
     src/helper.cpp \
-    detection/detection.cpp \
+    DetectAndRecognize/detection.cpp \
+    DetectAndRecognize/recognition.cpp \
 
 HEADERS  += gui/mainwindow.h \
     src/helper.hpp \
     libs/easylogging++.h \
-    detection/detection.hpp \
+    DetectAndRecognize/detection.hpp \
+    DetectAndRecognize/recognition.hpp \
 
 FORMS    += gui/mainwindow.ui
