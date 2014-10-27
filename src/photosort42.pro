@@ -25,11 +25,15 @@ SOURCES += src/main.cpp\
     src/helper.cpp \
     DetectAndRecognize/detection.cpp \
     DetectAndRecognize/recognition.cpp \
+    DetectAndRecognize/recog_Eigen.cpp \
+    DetectAndRecognize/recog_Fisher.cpp \
 
 HEADERS  += gui/mainwindow.h \
     src/helper.hpp \
     libs/easylogging++.h \
     DetectAndRecognize/detection.hpp \
     DetectAndRecognize/recognition.hpp \
+    DetectAndRecognize/recog_Eigen.hpp \
+    DetectAndRecognize/recog_Fisher.hpp \
 
 FORMS    += gui/mainwindow.ui
