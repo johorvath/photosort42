@@ -11,13 +11,14 @@ QT:
     - Todo entries in the bar below
 
 TODO
+- add to productbacklog (help, rename files)
 - file handling (check, etc.)
 - output path handling
 - comment EVERYTHING
 - add logger
 - talk about detection method/strategy; how many cascades?
 - remove Gtk-WARNING
-- perhaps not only choose photos but also folder?
+- ~~perhaps not only choose photos but also folder?~~
 - add filedialog for output
 - add explanation about installing needed libs
 	- boost: http://particlephysicsandcode.com/2013/03/11/installing-boost-1-52-ubuntu-12-04-fedora/ (instead of the last 2 lines do: 
