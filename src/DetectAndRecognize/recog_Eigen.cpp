@@ -2,6 +2,10 @@
 #include <opencv2/contrib/contrib.hpp>
 
 
+/**
+ * @brief facerecognizer_eigen::facerecognizer_eigen
+ * @param test
+ */
 facerecognizer_eigen::facerecognizer_eigen ( std::string const& test )
 {
 }
