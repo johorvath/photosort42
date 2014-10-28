@@ -1,4 +1,4 @@
-Project for the lecture "Softwaretechnologie" at the University of Applied Science Ulm"
+Project for the lecture "Softwaretechnologie" at the University of Applied Science Ulm
 
 PhotoSort42
 
