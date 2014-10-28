@@ -4,6 +4,11 @@ PhotoSort42
 
 Sorting program for fotos via face detection and recognition
 
+Dependencies:
+- QT5.3
+- Boost 1.56.0
+- OpenCV 2.49
+
 QT:
 - add TODO flag:
     - Help->About Plugins-> "Utilities" -> "Todo"
