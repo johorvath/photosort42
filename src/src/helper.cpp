@@ -42,5 +42,12 @@ namespace helper {
     }
     return status_dir;
   }
+
+  void resize_face ( std::vector < cv::Mat > & face )
+  {
+
+  }
+
+
 }
 
