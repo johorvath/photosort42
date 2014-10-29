@@ -13,5 +13,5 @@ public:
     facerecognizer_eigen( std::string const& test );
     ~facerecognizer_eigen();
 
-    void recognize_face ( cv::Mat const& face, cv::Mat const& comp_face );
+    void recognize_face ( std::vector < cv::Mat >& faces, cv::Mat const& comp_face );
 };

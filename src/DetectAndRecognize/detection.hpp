@@ -13,7 +13,7 @@ public:
     facedetector( std::string const& test );
     ~facedetector();
 
-    void detect_face (cv::Mat &img);
+    void detect_face (cv::Mat &img, std::vector<cv::Mat> &faces_mat);
 
 
 private:

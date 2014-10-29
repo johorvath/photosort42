@@ -25,7 +25,7 @@ facedetector::~facedetector ()
 
 }
 
-void facedetector::detect_face( cv::Mat& img )
+void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat )
 {
     std::vector < cv::Rect > faces;
     std::vector < cv::Rect > faces_tmp;
@@ -90,8 +90,9 @@ void facedetector::detect_face( cv::Mat& img )
         {
             cv::rectangle( ROI, eyes_glass[i], cv::Scalar(255, 0, 0), 2, 8, 0 );
         }
-        cv::imshow( "roi", ROI );
-        cv::waitKey(0);
+        faces_mat.push_back( ROI );
+//        cv::imshow( "roi", ROI );
+//        cv::waitKey(0);
     }
     for ( unsigned int i = 0; i < faces.size(); ++i )
     {
