@@ -4,7 +4,12 @@
 facedetector::facedetector ( std::string const& test ):
     face_cascade_name_ ( "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml" ),
     eyes_glass_cascade_name_ ( "/usr/local/share/OpenCV/haarcascades/haarcascade_eye_tree_eyeglasses.xml" ),
-    eyes_cascade_name_ ( "/usr/local/share/OpenCV/haarcascades/haarcascade_eye.xml" )
+    eyes_cascade_name_ ( "/usr/local/share/OpenCV/haarcascades/haarcascade_eye.xml" ),
+    left_eye_cascade_name_ ( "/usr/local/share/OpenCV/haarcascades/haarcascade_lefteye_2split.xml" ),
+    right_eye_cascade_name_ ( "/usr/local/share/OpenCV/haarcascades/haarcascade_righteye_2splits.xml" ),
+    face1_cascade_name_ ( "/usr/local/share/OpenCV/haarcascades/haarcascadefrontalface_alt2.xml"),
+    face2_cascade_name_ ( "/usr/local/share/OpenCV/haarcascades/haarcascadefrontalface_alt_tree.xml"),
+    face3_cascade_name_ ( "/usr/local/share/OpenCV/haarcascades/haarcascadefrontalface_default.xml")
 {
     if( !face_cascade_.load( face_cascade_name_ ) )
     {
@@ -15,6 +20,26 @@ facedetector::facedetector ( std::string const& test ):
         LOG(ERROR) << "Error loading eye cascade";
     }
     if( !eyes_glass_cascade_.load( eyes_glass_cascade_name_ ) )
+    {
+        LOG(ERROR) << "Error loading eye cascade";
+    }
+    if( !face1_cascade_.load( face1_cascade_name_ ) )
+    {
+        LOG(ERROR) << "Error loading eye cascade";
+    }
+    if( !face2_cascade_.load( face2_cascade_name_ ) )
+    {
+        LOG(ERROR) << "Error loading eye cascade";
+    }
+    if( !face3_cascade_.load( face3_cascade_name_ ) )
+    {
+        LOG(ERROR) << "Error loading eye cascade";
+    }
+    if( !left_eye_cascade_.load( left_eye_cascade_name_ ) )
+    {
+        LOG(ERROR) << "Error loading eye cascade";
+    }
+    if( !right_eye_cascade_.load( right_eye_cascade_name_ ) )
     {
         LOG(ERROR) << "Error loading eye cascade";
     }
@@ -53,7 +78,7 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
 
 
         //-- In each face, detect eyes
-        eyes_cascade_.detectMultiScale( faceROI, eyes, 1.1, 2, 0 |cv::CASCADE_SCALE_IMAGE, cv::Size(15, 15) );
+        left_eye_cascade_.detectMultiScale( faceROI, eyes, 1.1, 2, 0 |cv::CASCADE_SCALE_IMAGE, cv::Size(15, 15) );
         if ( eyes. size() >= 1 )
         {
             faces.push_back( faces_tmp[i] );
@@ -84,7 +109,7 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
         cv::Mat ROI = img( faces[i] );
         for ( unsigned int i = 0; i < eyes.size(); ++i )
         {
-            cv::rectangle( ROI, eyes[i], cv::Scalar(255, 0, 0), 2, 8, 0 );
+            cv::rectangle( ROI, eyes[i], cv::Scalar(255, 0, 255), 2, 8, 0 );
         }
         for ( unsigned int i = 0; i < eyes_glass.size(); ++i )
         {
@@ -99,8 +124,6 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
         cv::Rect face = faces[i];
         cv::rectangle( img, face.tl(), face.br() , cv::Scalar(0, 255, 0), 2, 8, 0 );
     }
-
-
 
     cv::imshow( "window_name", img );
     cv::waitKey( 0 );

@@ -1,5 +1,6 @@
 #include "recog_Eigen.hpp"
 #include <opencv2/contrib/contrib.hpp>
+#include <iostream>
 
 
 /**
@@ -36,29 +37,49 @@ void facerecognizer_eigen::recognize_face( std::vector < cv::Mat >& faces, cv::M
 
 }
 
-
-/*
-static void read_csv(const string& filename, vector<Mat>& images, vector<int>& labels, char separator = ';') {
-    std::ifstream file(filename.c_str(), ifstream::in);
+static void read_csv(const std::string& filename, std::vector<cv::Mat>& images, std::vector<int>& labels, char separator = ';') {
+    std::ifstream file(filename.c_str(), std::ifstream::in);
     if (!file) {
-        string error_message = "No valid input file was given, please check the given filename.";
+        std::string error_message = "No valid input file was given, please check the given filename.";
         CV_Error(CV_StsBadArg, error_message);
     }
-    string line, path, classlabel;
+    std::string line, path, classlabel;
     while (getline(file, line)) {
-        stringstream liness(line);
-        getline(liness, path, separator);
-        getline(liness, classlabel);
+        std::stringstream liness(line);
+        std::getline(liness, path, separator);
+        std::getline(liness, classlabel);
         if(!path.empty() && !classlabel.empty()) {
-            images.push_back(imread(path, 0));
+            images.push_back(cv::imread(path, 0));
             labels.push_back(atoi(classlabel.c_str()));
         }
     }
 }
-*/
 
-void test ()
+
+void facerecognizer_eigen::test ()
 {
+    std::vector<cv::Mat> images;
+    std::vector<int> labels;
+    std::string fn_csv = "/home/johannes/Documents/test.csv";
+    try {
+            read_csv(fn_csv, images, labels);
+        } catch (cv::Exception& e) {
+            std::cerr << "Error opening file \"" << fn_csv << "\". Reason: " << e.msg << std::endl;
+            // nothing more we can do
+            exit(1);
+        }
+
+    cv::Mat testSample = images[images.size() - 1];
+    int testLabel = labels[labels.size() - 1];
+    images.pop_back();
+    labels.pop_back();
+
+    cv::Ptr<cv::FaceRecognizer> model = cv::createEigenFaceRecognizer();
+    model->train(images, labels);
+    int predictedLabel = model->predict(testSample);
+
+
+    std::cout << predictedLabel << " " << testLabel << std::endl;
     /* ONLY BLABLA
     // Quit if there are not enough images for this demo.
     if(images.size() <= 1) {

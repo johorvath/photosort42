@@ -30,7 +30,8 @@ void MainWindow::on_pushButton_sort_clicked()       //Sortierbutton
     comp_img_ = cv::imread( comp_file_, CV_LOAD_IMAGE_COLOR );
     img_ = cv::imread( ui->textEdit_photoInput->toPlainText().toStdString(), CV_LOAD_IMAGE_COLOR );
     facedetect_->detect_face( comp_img_, faces );
-    face_eigen_->recognize_face( faces, comp_img_ );
+//    face_eigen_->recognize_face( faces, comp_img_ );
+    face_eigen_->test();
 
 }
 
