@@ -78,7 +78,7 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
 
 
         //-- In each face, detect eyes
-        left_eye_cascade_.detectMultiScale( faceROI, eyes, 1.1, 2, 0 |cv::CASCADE_SCALE_IMAGE, cv::Size(15, 15) );
+        eyes_cascade_.detectMultiScale( faceROI, eyes, 1.1, 2, 0 |cv::CASCADE_SCALE_IMAGE, cv::Size(15, 15) );
         if ( eyes. size() >= 1 )
         {
             faces.push_back( faces_tmp[i] );
