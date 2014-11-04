@@ -15,4 +15,7 @@ public:
 
     void recognize_face ( std::vector < cv::Mat >& faces, cv::Mat const& comp_face );
     void test();
+
+private:
+    void scale_mats ( std::vector < cv::Mat >& imgs );
 };

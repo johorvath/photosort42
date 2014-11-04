@@ -55,6 +55,10 @@ static void read_csv(const std::string& filename, std::vector<cv::Mat>& images, 
     }
 }
 
+void facerecognizer_eigen::scale ( std::vector < cv::Mat > imgs )
+{
+
+}
 
 void facerecognizer_eigen::test ()
 {
