@@ -7,7 +7,11 @@
  * @brief facerecognizer_eigen::facerecognizer_eigen
  * @param test
  */
-facerecognizer_eigen::facerecognizer_eigen ( std::string const& test )
+facerecognizer_eigen::facerecognizer_eigen ( std::string const& test ) :
+    xmax_ ( -1 ),
+    ymax_ ( -1 ),
+    xmin_ ( 100000 ),
+    ymin_ ( 100000 )
 {
 }
 
@@ -55,8 +59,40 @@ static void read_csv(const std::string& filename, std::vector<cv::Mat>& images, 
     }
 }
 
-void facerecognizer_eigen::scale ( std::vector < cv::Mat > imgs )
+void facerecognizer_eigen::scale_mats ( std::vector < cv::Mat >& imgs )
 {
+    for ( unsigned int i = 0; i < imgs.size(); ++i )
+    {
+        cv::Size img_size = imgs[i].size();
+        if ( img_size.height > ymax_ )
+        {
+            ymax_ = img_size.height;
+        }
+        if ( img_size.height < ymin_ )
+        {
+            ymin_ = img_size.height;
+        }
+        if ( img_size.width > xmax_ )
+        {
+            xmax_ = img_size.width;
+        }
+        if ( img_size.width < xmin_ )
+        {
+            xmin_ = img_size.width;
+        }
+        std::cout << " " << std::endl;
+
+
+    }
+    for ( unsigned int i = 0; i < imgs.size(); ++i )
+    {
+        xresize_ = (xmax_ + xmin_) / 2;
+        yresize_ = (ymax_ + ymin_) / 2;
+        cv::Mat img = imgs[i];
+        cv::Size size( xresize_, yresize_ );
+        cv::resize( img, img, size );
+        std::cout << " " << std::endl;
+    }
 
 }
 
@@ -72,6 +108,8 @@ void facerecognizer_eigen::test ()
             // nothing more we can do
             exit(1);
         }
+
+    scale_mats( images );
 
     cv::Mat testSample = images[images.size() - 1];
     int testLabel = labels[labels.size() - 1];
