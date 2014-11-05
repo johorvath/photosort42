@@ -25,5 +25,6 @@ private:
     int ymax_;
     int xresize_;
     int yresize_;
-
+    int xsum_;
+    int ysum_;
 };

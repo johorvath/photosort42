@@ -11,7 +11,9 @@ facerecognizer_eigen::facerecognizer_eigen ( std::string const& test ) :
     xmax_ ( -1 ),
     ymax_ ( -1 ),
     xmin_ ( 100000 ),
-    ymin_ ( 100000 )
+    ymin_ ( 100000 ),
+    ysum_ ( 0 ),
+    xsum_ ( 0 )
 {
 }
 
@@ -64,6 +66,8 @@ void facerecognizer_eigen::scale_mats ( std::vector < cv::Mat >& imgs )
     for ( unsigned int i = 0; i < imgs.size(); ++i )
     {
         cv::Size img_size = imgs[i].size();
+        xsum_ += img_size.width;
+        ysum_ += img_size.height;
         if ( img_size.height > ymax_ )
         {
             ymax_ = img_size.height;
@@ -81,16 +85,16 @@ void facerecognizer_eigen::scale_mats ( std::vector < cv::Mat >& imgs )
             xmin_ = img_size.width;
         }
         std::cout << " " << std::endl;
-
-
     }
+//    xresize_ = xsum_ / imgs.size();
+//    yresize_ = ysum_ / imgs.size();
+//    xresize_ = (xmax_ + xmin_) / 2;
+//    yresize_ = (ymax_ + ymin_) / 2;
+    cv::Size size( xmin_, ymin_ );
+
     for ( unsigned int i = 0; i < imgs.size(); ++i )
     {
-        xresize_ = (xmax_ + xmin_) / 2;
-        yresize_ = (ymax_ + ymin_) / 2;
-        cv::Mat img = imgs[i];
-        cv::Size size( xresize_, yresize_ );
-        cv::resize( img, img, size );
+        cv::resize( imgs[i], imgs[i], size );
         std::cout << " " << std::endl;
     }
 
@@ -110,6 +114,14 @@ void facerecognizer_eigen::test ()
         }
 
     scale_mats( images );
+
+    for ( unsigned int i = 0; i < images.size(); ++i )
+    {
+        cv::imshow( "test", images[i] );
+        cv::waitKey( 0 );
+    }
+
+
 
     cv::Mat testSample = images[images.size() - 1];
     int testLabel = labels[labels.size() - 1];
