@@ -18,19 +18,32 @@ enum recognize_mode {
 class facerecognizer
 {
 public:
-    facerecognizer( std::string const& test );
+    facerecognizer( std::string const& test, recognize_mode const& mode );
     ~facerecognizer();
 
-    void update_model ( cv::Mat& face, int label );
+    void update_model (  recognize_mode const& mode, cv::Mat& face, int label );
 
     void recognize_face ( cv::Mat const& face, cv::Mat const& comp_face, recognize_mode const& mode );
 
-    void train_model ( std::vector < cv::Mat > const& images, std::vector < int > const& label );
+    void recognize ( std::vector <cv::Mat>& images, std::vector <int>& labels);
+
+    void train_model ( recognize_mode const& mode, std::vector < cv::Mat > const& images, std::vector < int > const& label );
 
 private:
-    void load_model ( recognize_mode const& mode,, cv::Ptr <cv::FaceRecognizer>& model );
+    void load_model ( recognize_mode const& mode, cv::Ptr <cv::FaceRecognizer>& model );
+    void scale_mats ( std::vector < cv::Mat >& imgs );
     std::string model_path_;
     cv::Ptr <cv::FaceRecognizer> model_;
+    recognize_mode mode_;
+
+    int xmin_;
+    int xmax_;
+    int ymin_;
+    int ymax_;
+    int xresize_;
+    int yresize_;
+    int xsum_;
+    int ysum_;
 
 
 };

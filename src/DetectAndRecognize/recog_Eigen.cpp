@@ -22,6 +22,63 @@ facerecognizer_eigen::~facerecognizer_eigen ()
 
 }
 
+static cv::Mat norm_0_255( cv::InputArray _src) {
+    cv::Mat src = _src.getMat();
+    // Create and return normalized image:
+    cv::Mat dst;
+    switch(src.channels()) {
+    case 1:
+        cv::normalize(_src, dst, 0, 255, cv::NORM_MINMAX, CV_8UC1);
+        break;
+    case 3:
+        cv::normalize(_src, dst, 0, 255, cv::NORM_MINMAX, CV_8UC3);
+        break;
+    default:
+        src.copyTo(dst);
+        break;
+    }
+    return dst;
+}
+
+void facerecognizer_eigen::scale_mats ( std::vector < cv::Mat >& imgs )
+{
+    for ( unsigned int i = 0; i < imgs.size(); ++i )
+    {
+        cv::Size img_size = imgs[i].size();
+        xsum_ += img_size.width;
+        ysum_ += img_size.height;
+        if ( img_size.height > ymax_ )
+        {
+            ymax_ = img_size.height;
+        }
+        if ( img_size.height < ymin_ )
+        {
+            ymin_ = img_size.height;
+        }
+        if ( img_size.width > xmax_ )
+        {
+            xmax_ = img_size.width;
+        }
+        if ( img_size.width < xmin_ )
+        {
+            xmin_ = img_size.width;
+        }
+        std::cout << " " << std::endl;
+    }
+    xresize_ = xsum_ / imgs.size();
+    yresize_ = ysum_ / imgs.size();
+//    xresize_ = (xmax_ + xmin_) / 2;
+//    yresize_ = (ymax_ + ymin_) / 2;
+    cv::Size size( xresize_, yresize_ );
+
+    for ( unsigned int i = 0; i < imgs.size(); ++i )
+    {
+        cv::resize( imgs[i], imgs[i], size );
+        std::cout << " " << std::endl;
+    }
+
+}
+
 void facerecognizer_eigen::recognize_face( std::vector < cv::Mat >& faces, cv::Mat const& comp_face )
 {
 
@@ -61,44 +118,6 @@ static void read_csv(const std::string& filename, std::vector<cv::Mat>& images, 
     }
 }
 
-void facerecognizer_eigen::scale_mats ( std::vector < cv::Mat >& imgs )
-{
-    for ( unsigned int i = 0; i < imgs.size(); ++i )
-    {
-        cv::Size img_size = imgs[i].size();
-        xsum_ += img_size.width;
-        ysum_ += img_size.height;
-        if ( img_size.height > ymax_ )
-        {
-            ymax_ = img_size.height;
-        }
-        if ( img_size.height < ymin_ )
-        {
-            ymin_ = img_size.height;
-        }
-        if ( img_size.width > xmax_ )
-        {
-            xmax_ = img_size.width;
-        }
-        if ( img_size.width < xmin_ )
-        {
-            xmin_ = img_size.width;
-        }
-        std::cout << " " << std::endl;
-    }
-//    xresize_ = xsum_ / imgs.size();
-//    yresize_ = ysum_ / imgs.size();
-//    xresize_ = (xmax_ + xmin_) / 2;
-//    yresize_ = (ymax_ + ymin_) / 2;
-    cv::Size size( xmin_, ymin_ );
-
-    for ( unsigned int i = 0; i < imgs.size(); ++i )
-    {
-        cv::resize( imgs[i], imgs[i], size );
-        std::cout << " " << std::endl;
-    }
-
-}
 
 void facerecognizer_eigen::test ()
 {
@@ -115,25 +134,22 @@ void facerecognizer_eigen::test ()
 
     scale_mats( images );
 
-    for ( unsigned int i = 0; i < images.size(); ++i )
-    {
-        cv::imshow( "test", images[i] );
-        cv::waitKey( 0 );
-    }
-
-
 
     cv::Mat testSample = images[images.size() - 1];
     int testLabel = labels[labels.size() - 1];
     images.pop_back();
     labels.pop_back();
 
-    cv::Ptr<cv::FaceRecognizer> model = cv::createEigenFaceRecognizer();
+    cv::Ptr<cv::FaceRecognizer> model = cv::createEigenFaceRecognizer( 10 );
+
     model->train(images, labels);
+    model->save( "test.yml" );
     int predictedLabel = model->predict(testSample);
 
 
     std::cout << predictedLabel << " " << testLabel << std::endl;
+
+    int height = images[0].rows;
     /* ONLY BLABLA
     // Quit if there are not enough images for this demo.
     if(images.size() <= 1) {
@@ -185,56 +201,45 @@ void facerecognizer_eigen::test ()
 //    //      double confidence = 0.0;
 //    //      model->predict(testSample, predictedLabel, confidence);
 //    //
-//    string result_message = format("Predicted class = %d / Actual class = %d.", predictedLabel, testLabel);
-//    cout << result_message << endl;
-//    // Here is how to get the eigenvalues of this Eigenfaces model:
-//    Mat eigenvalues = model->getMat("eigenvalues");
-//    // And we can do the same to display the Eigenvectors (read Eigenfaces):
-//    Mat W = model->getMat("eigenvectors");
-//    // Get the sample mean from the training data
-//    Mat mean = model->getMat("mean");
-//    // Display or save:
-//    if(argc == 2) {
-//        imshow("mean", norm_0_255(mean.reshape(1, images[0].rows)));
-//    } else {
-//        imwrite(format("%s/mean.png", output_folder.c_str()), norm_0_255(mean.reshape(1, images[0].rows)));
-//    }
-//    // Display or save the first, at most 16 Fisherfaces:
-//    for (int i = 0; i < min(16, W.cols); i++) {
-//        string msg = format("Eigenvalue #%d = %.5f", i, eigenvalues.at<double>(i));
-//        cout << msg << endl;
-//        // get eigenvector #i
-//        Mat ev = W.col(i).clone();
-//        // Reshape to original size & normalize to [0...255] for imshow.
-//        Mat grayscale = norm_0_255(ev.reshape(1, height));
-//        // Show the image & apply a Bone colormap for better sensing.
-//        Mat cgrayscale;
-//        applyColorMap(grayscale, cgrayscale, COLORMAP_BONE);
-//        // Display or save:
-//        if(argc == 2) {
-//            imshow(format("fisherface_%d", i), cgrayscale);
-//        } else {
-//            imwrite(format("%s/fisherface_%d.png", output_folder.c_str(), i), norm_0_255(cgrayscale));
-//        }
-//    }
-//    // Display or save the image reconstruction at some predefined steps:
-//    for(int num_component = 0; num_component < min(16, W.cols); num_component++) {
-//        // Slice the Fisherface from the model:
-//        Mat ev = W.col(num_component);
-//        Mat projection = subspaceProject(ev, mean, images[0].reshape(1,1));
-//        Mat reconstruction = subspaceReconstruct(ev, mean, projection);
-//        // Normalize the result:
-//        reconstruction = norm_0_255(reconstruction.reshape(1, images[0].rows));
-//        // Display or save:
-//        if(argc == 2) {
-//            imshow(format("fisherface_reconstruction_%d", num_component), reconstruction);
-//        } else {
-//            imwrite(format("%s/fisherface_reconstruction_%d.png", output_folder.c_str(), num_component), reconstruction);
-//        }
-//    }
-//    // Display if we are not writing to an output folder:
-//    if(argc == 2) {
-//        waitKey(0);
-//    }
-//    return 0;
+    /*
+    std::string result_message = cv::format("Predicted class = %d / Actual class = %d.", predictedLabel, testLabel);
+    std::cout << result_message << std::endl;
+    // Here is how to get the eigenvalues of this Eigenfaces model:
+    cv::Mat eigenvalues = model->getMat("eigenvalues");
+    // And we can do the same to display the Eigenvectors (read Eigenfaces):
+    cv::Mat W = model->getMat("eigenvectors");
+    // Get the sample mean from the training data
+    cv::Mat mean = model->getMat("mean");
+    // Display or save:
+    cv::imshow("mean", norm_0_255(mean.reshape(1, images[0].rows)));
+    // Display or save the first, at most 16 Fisherfaces:
+    for (int i = 0; i < std::min(16, W.cols); i++) {
+        std::string msg = cv::format("Eigenvalue #%d = %.5f", i, eigenvalues.at<double>(i));
+        std::cout << msg << std::endl;
+        // get eigenvector #i
+        cv::Mat ev = W.col(i).clone();
+        // Reshape to original size & normalize to [0...255] for imshow.
+        cv::Mat grayscale = norm_0_255(ev.reshape(1, height));
+        // Show the image & apply a Bone colormap for better sensing.
+        cv::Mat cgrayscale;
+        cv::applyColorMap(grayscale, cgrayscale, cv::COLORMAP_BONE);
+        // Display or save:
+        cv::imshow(cv::format("fisherface_%d", i), cgrayscale);
+    }
+    // Display or save the image reconstruction at some predefined steps:
+    for(int num_component = 0; num_component < std::min(16, W.cols); num_component++) {
+        // Slice the Fisherface from the model:
+        cv::Mat ev = W.col(num_component);
+        cv::Mat projection = subspaceProject(ev, mean, images[0].reshape(1,1));
+        cv::Mat reconstruction = subspaceReconstruct(ev, mean, projection);
+        // Normalize the result:
+        reconstruction = norm_0_255(reconstruction.reshape(1, images[0].rows));
+        // Display or save:
+        cv::imshow(cv::format("fisherface_reconstruction_%d", num_component), reconstruction);
+       }
+        */
+    cv::imshow( "end", testSample );
+    // Display if we are not writing to an output folder:
+
+
 }

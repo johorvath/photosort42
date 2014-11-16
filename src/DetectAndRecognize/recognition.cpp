@@ -1,7 +1,8 @@
 #include "recognition.hpp"
 
 
-facerecognizer::facerecognizer ( std::string const& test )
+facerecognizer::facerecognizer (std::string const& test, recognize_mode const& mode ):
+    mode_( mode )
 {
     model_path_ ="/home/johannes/tmp";
 
@@ -12,7 +13,62 @@ facerecognizer::~facerecognizer ()
 
 }
 
+void facerecognizer::scale_mats ( std::vector < cv::Mat >& imgs )
+{
+    for ( unsigned int i = 0; i < imgs.size(); ++i )
+    {
+        cv::Size img_size = imgs[i].size();
+        xsum_ += img_size.width;
+        ysum_ += img_size.height;
+        if ( img_size.height > ymax_ )
+        {
+            ymax_ = img_size.height;
+        }
+        if ( img_size.height < ymin_ )
+        {
+            ymin_ = img_size.height;
+        }
+        if ( img_size.width > xmax_ )
+        {
+            xmax_ = img_size.width;
+        }
+        if ( img_size.width < xmin_ )
+        {
+            xmin_ = img_size.width;
+        }
+        std::cout << " " << std::endl;
+    }
+    xresize_ = xsum_ / imgs.size();
+    yresize_ = ysum_ / imgs.size();
+//    xresize_ = (xmax_ + xmin_) / 2;
+//    yresize_ = (ymax_ + ymin_) / 2;
+    cv::Size size( xresize_, yresize_ );
 
+    for ( unsigned int i = 0; i < imgs.size(); ++i )
+    {
+        cv::resize( imgs[i], imgs[i], size );
+        std::cout << " " << std::endl;
+    }
+
+}
+
+static void read_csv(const std::string& filename, std::vector<cv::Mat>& images, std::vector<int>& labels, char separator = ';') {
+    std::ifstream file(filename.c_str(), std::ifstream::in);
+    if (!file) {
+        std::string error_message = "No valid input file was given, please check the given filename.";
+        CV_Error(CV_StsBadArg, error_message);
+    }
+    std::string line, path, classlabel;
+    while (getline(file, line)) {
+        std::stringstream liness(line);
+        std::getline(liness, path, separator);
+        std::getline(liness, classlabel);
+        if(!path.empty() && !classlabel.empty()) {
+            images.push_back(cv::imread(path, 0));
+            labels.push_back(atoi(classlabel.c_str()));
+        }
+    }
+}
 
 static cv::Mat norm_0_255( cv::InputArray _src) {
     cv::Mat src = _src.getMat();
@@ -32,7 +88,8 @@ static cv::Mat norm_0_255( cv::InputArray _src) {
     return dst;
 }
 
-void facerecognizer::train_model ( recognize_mode const&mode, std::vector < cv::Mat > const& images, std::vector < int > const& label )
+/*
+void facerecognizer::train_model ( recognize_mode const& mode, std::vector < cv::Mat > const& images, std::vector < int > const& label )
 {
     boost::filesystem::path path ( model_path_ );
     switch ( mode )
@@ -89,13 +146,11 @@ void facerecognizer::load_model ( recognize_mode const& mode, cv::Ptr <cv::FaceR
     }
 
 }
+*/
 
 
-
-void facerecognizer_eigen::recognize ( std::)
+void facerecognizer::recognize ( std::vector <cv::Mat>& images, std::vector <int>& labels)
 {
-    std::vector<cv::Mat> images;
-    std::vector<int> labels;
     std::string fn_csv = "/home/johannes/Documents/test.csv";
     try {
             read_csv(fn_csv, images, labels);
@@ -121,8 +176,8 @@ void facerecognizer_eigen::recognize ( std::)
 
 
     std::cout << predictedLabel << " " << testLabel << std::endl;
-
-    int height = images[0].rows;
+}
+    //int height = images[0].rows;
     /* ONLY BLABLA
     // Quit if there are not enough images for this demo.
     if(images.size() <= 1) {
@@ -174,6 +229,7 @@ void facerecognizer_eigen::recognize ( std::)
 //    //      double confidence = 0.0;
 //    //      model->predict(testSample, predictedLabel, confidence);
 //    //
+    /*
     std::string result_message = cv::format("Predicted class = %d / Actual class = %d.", predictedLabel, testLabel);
     std::cout << result_message << std::endl;
     // Here is how to get the eigenvalues of this Eigenfaces model:
@@ -213,6 +269,7 @@ void facerecognizer_eigen::recognize ( std::)
     // Display if we are not writing to an output folder:
 
 }
+*/
 /*
 void facerecognizer::train_face( const cv::Mat &face, const cv::Mat &comp_face, recognize_mode const& mode )
 {
