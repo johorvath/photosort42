@@ -5,12 +5,38 @@ facerecognizer::facerecognizer (std::string const& test, recognize_mode const& m
     mode_( mode )
 {
     model_path_ ="/home/johannes/tmp";
-
 }
 
 facerecognizer::~facerecognizer ()
 {
 
+}
+
+void facerecognizer::udpate_model( recognize_mode const& mode, std::vector<cv::Mat> const& images, std::vector<int> const& label )
+{
+    switch ( mode )
+    {
+        case EIGEN:
+        {
+            model_eigen_->update( images, label );
+
+            break;
+        }
+        case FISHER:
+        {
+            model_fisher_->update( images, label );
+            break;
+        }
+        case LBP:
+        {
+            model_lbp_->update( images, label );
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
 }
 
 void facerecognizer::scale_mats ( std::vector < cv::Mat >& imgs )

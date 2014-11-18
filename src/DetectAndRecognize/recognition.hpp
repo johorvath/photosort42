@@ -21,7 +21,7 @@ public:
     facerecognizer( std::string const& test, recognize_mode const& mode );
     ~facerecognizer();
 
-    void update_model (  recognize_mode const& mode, cv::Mat& face, int label );
+    void update_model ( recognize_mode const& mode, std::vector <cv::Mat>& face, std::vector <int>& label );
 
     void recognize_face ( cv::Mat const& face, cv::Mat const& comp_face, recognize_mode const& mode );
 
@@ -33,7 +33,9 @@ private:
     void load_model ( recognize_mode const& mode, cv::Ptr <cv::FaceRecognizer>& model );
     void scale_mats ( std::vector < cv::Mat >& imgs );
     std::string model_path_;
-    cv::Ptr <cv::FaceRecognizer> model_;
+    cv::Ptr <cv::FaceRecognizer> model_eigen_;
+    cv::Ptr <cv::FaceRecognizer> model_fisher_;
+    cv::Ptr <cv::FaceRecognizer> model_lbp_;
     recognize_mode mode_;
 
     int xmin_;
