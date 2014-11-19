@@ -8,6 +8,7 @@
 #include "libs/easylogging++.h"
 #include <boost/filesystem.hpp>
 
+#include "src/helper.hpp"
 
 enum recognize_mode {
     EIGEN,

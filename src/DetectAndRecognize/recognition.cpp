@@ -12,7 +12,7 @@ facerecognizer::~facerecognizer ()
 
 }
 
-void facerecognizer::udpate_model( recognize_mode const& mode, std::vector<cv::Mat> const& images, std::vector<int> const& label )
+void facerecognizer::update_model( recognize_mode const& mode, std::vector<cv::Mat>& images, std::vector<int>& label )
 {
     switch ( mode )
     {
@@ -78,72 +78,6 @@ void facerecognizer::scale_mats ( std::vector < cv::Mat >& imgs )
 
 }
 
-static void read_csv(const std::string& filename, std::vector<cv::Mat>& images, std::vector<int>& labels, char separator = ';') {
-    std::ifstream file(filename.c_str(), std::ifstream::in);
-    if (!file) {
-        std::string error_message = "No valid input file was given, please check the given filename.";
-        CV_Error(CV_StsBadArg, error_message);
-    }
-    std::string line, path, classlabel;
-    while (getline(file, line)) {
-        std::stringstream liness(line);
-        std::getline(liness, path, separator);
-        std::getline(liness, classlabel);
-        if(!path.empty() && !classlabel.empty()) {
-            images.push_back(cv::imread(path, 0));
-            labels.push_back(atoi(classlabel.c_str()));
-        }
-    }
-}
-
-static cv::Mat norm_0_255( cv::InputArray _src) {
-    cv::Mat src = _src.getMat();
-    // Create and return normalized image:
-    cv::Mat dst;
-    switch(src.channels()) {
-    case 1:
-        cv::normalize(_src, dst, 0, 255, cv::NORM_MINMAX, CV_8UC1);
-        break;
-    case 3:
-        cv::normalize(_src, dst, 0, 255, cv::NORM_MINMAX, CV_8UC3);
-        break;
-    default:
-        src.copyTo(dst);
-        break;
-    }
-    return dst;
-}
-
-/*
-void facerecognizer::train_model ( recognize_mode const& mode, std::vector < cv::Mat > const& images, std::vector < int > const& label )
-{
-    boost::filesystem::path path ( model_path_ );
-    switch ( mode )
-    {
-        case EIGEN:
-        {
-            model->load( (path / "model_eigen.yml").string );
-
-            break;
-        }
-        case FISHER:
-        {
-            model->load( (path / "model_fisher.yml").string );
-            break;
-        }
-        case LBP:
-        {
-            model->load( (path / "model_lbp.yml").string );
-            break;
-        }
-        default:
-        {
-            break;
-        }
-    }
-
-}
-
 void facerecognizer::load_model ( recognize_mode const& mode, cv::Ptr <cv::FaceRecognizer>& model )
 {
     boost::filesystem::path path ( model_path_ );
@@ -172,14 +106,69 @@ void facerecognizer::load_model ( recognize_mode const& mode, cv::Ptr <cv::FaceR
     }
 
 }
-*/
+
+void facerecognizer::train_model ( recognize_mode const& mode, std::vector < cv::Mat > const& images, std::vector < int > const& label )
+{
+    boost::filesystem::path path ( model_path_ );
+    switch ( mode )
+    {
+        case EIGEN:
+        {
+            model->train( (path / "model_eigen.yml").string );
+
+            break;
+        }
+        case FISHER:
+        {
+            model->train( (path / "model_fisher.yml").string );
+            break;
+        }
+        case LBP:
+        {
+            model->train( (path / "model_lbp.yml").string );
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+
+}
+
+
+
+
+static cv::Mat norm_0_255( cv::InputArray _src) {
+    cv::Mat src = _src.getMat();
+    // Create and return normalized image:
+    cv::Mat dst;
+    switch(src.channels()) {
+    case 1:
+        cv::normalize(_src, dst, 0, 255, cv::NORM_MINMAX, CV_8UC1);
+        break;
+    case 3:
+        cv::normalize(_src, dst, 0, 255, cv::NORM_MINMAX, CV_8UC3);
+        break;
+    default:
+        src.copyTo(dst);
+        break;
+    }
+    return dst;
+}
+
+
+
+
+
+
 
 
 void facerecognizer::recognize ( std::vector <cv::Mat>& images, std::vector <int>& labels)
 {
     std::string fn_csv = "/home/johannes/Documents/test.csv";
     try {
-            read_csv(fn_csv, images, labels);
+            helper::read_csv( fn_csv, images, labels );
         } catch (cv::Exception& e) {
             std::cerr << "Error opening file \"" << fn_csv << "\". Reason: " << e.msg << std::endl;
             // nothing more we can do
