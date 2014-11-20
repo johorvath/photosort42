@@ -39,6 +39,63 @@ void facerecognizer::update_model( recognize_mode const& mode, std::vector<cv::M
     }
 }
 
+void facerecognizer::load_model ( recognize_mode const& mode, cv::Ptr <cv::FaceRecognizer>& model, std::string const& dir )
+{
+    boost::filesystem::path path ( dir );
+    switch ( mode )
+    {
+        case EIGEN:
+        {
+            model_eigen_->load( dir );
+
+            break;
+        }
+        case FISHER:
+        {
+            model_fisher_->load( dir );
+            break;
+        }
+        case LBP:
+        {
+            model_lbp_->load( dir );
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+
+}
+
+void facerecognizer::train_model ( recognize_mode const& mode, std::vector < cv::Mat > const& images, std::vector < int > const& label )
+{
+    boost::filesystem::path path ( model_path_ );
+    switch ( mode )
+    {
+        case EIGEN:
+        {
+            model_eigen_->train( images, label );
+
+            break;
+        }
+        case FISHER:
+        {
+            model_fisher_->train( images, label );
+            break;
+        }
+        case LBP:
+        {
+            model_lbp_->train( images, label );
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+}
+
 void facerecognizer::scale_mats ( std::vector < cv::Mat >& imgs )
 {
     for ( unsigned int i = 0; i < imgs.size(); ++i )
@@ -78,25 +135,24 @@ void facerecognizer::scale_mats ( std::vector < cv::Mat >& imgs )
 
 }
 
-void facerecognizer::load_model ( recognize_mode const& mode, cv::Ptr <cv::FaceRecognizer>& model )
+int facerecognizer::recognize_face( recognize_mode const& mode, cv::Mat const& comp_face )
 {
-    boost::filesystem::path path ( model_path_ );
+    int predicted_label;
     switch ( mode )
     {
         case EIGEN:
         {
-            model->load( (path / "model_eigen.yml").string );
-
+            predicted_label = model_eigen_->predict( comp_face );
             break;
         }
         case FISHER:
         {
-            model->load( (path / "model_fisher.yml").string );
+            predicted_label = model_fisher_->predict( comp_face );
             break;
         }
         case LBP:
         {
-            model->load( (path / "model_lbp.yml").string );
+            predicted_label = model_lbp_->predict( comp_face );
             break;
         }
         default:
@@ -104,37 +160,10 @@ void facerecognizer::load_model ( recognize_mode const& mode, cv::Ptr <cv::FaceR
             break;
         }
     }
-
+    return predicted_label;
 }
 
-void facerecognizer::train_model ( recognize_mode const& mode, std::vector < cv::Mat > const& images, std::vector < int > const& label )
-{
-    boost::filesystem::path path ( model_path_ );
-    switch ( mode )
-    {
-        case EIGEN:
-        {
-            model->train( (path / "model_eigen.yml").string );
 
-            break;
-        }
-        case FISHER:
-        {
-            model->train( (path / "model_fisher.yml").string );
-            break;
-        }
-        case LBP:
-        {
-            model->train( (path / "model_lbp.yml").string );
-            break;
-        }
-        default:
-        {
-            break;
-        }
-    }
-
-}
 
 
 
@@ -159,12 +188,7 @@ static cv::Mat norm_0_255( cv::InputArray _src) {
 
 
 
-
-
-
-
-
-void facerecognizer::recognize ( std::vector <cv::Mat>& images, std::vector <int>& labels)
+void facerecognizer::recognize_test ( std::vector <cv::Mat>& images, std::vector <int>& labels)
 {
     std::string fn_csv = "/home/johannes/Documents/test.csv";
     try {
