@@ -26,6 +26,8 @@ public:
 
     int recognize_face ( recognize_mode const& mode, cv::Mat const& comp_face );
 
+    void recognize_test ( std::vector <cv::Mat>& images, std::vector <int>& labels );
+
     void recognize ( std::vector <cv::Mat>& images, std::vector <int>& labels);
 
     void train_model ( recognize_mode const& mode, std::vector < cv::Mat > const& images, std::vector < int > const& label );
