@@ -7,6 +7,7 @@
 
 #include "DetectAndRecognize/detection.hpp"
 #include "DetectAndRecognize/recog_Eigen.hpp"
+#include "DetectAndRecognize/recognition.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -34,7 +35,7 @@ private:
     std::string comp_file_;
     cv::Mat comp_img_;
     cv::Mat img_;
-    facerecognizer_eigen *face_eigen_;
+    facerecognizer *facerecognizer_;
 
 };
 

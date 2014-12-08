@@ -1,7 +1,7 @@
-#include "detection.hpp"
+#include "face_alignement.hpp"
 
 
-facedetector::facedetector ( std::string const& test ):
+face_alignement::face_alignement ( std::string const& test ):
     face_cascade_name_ ( "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml" ),
     eyes_glass_cascade_name_ ( "/usr/local/share/OpenCV/haarcascades/haarcascade_eye_tree_eyeglasses.xml" ),
     eyes_cascade_name_ ( "/usr/local/share/OpenCV/haarcascades/haarcascade_eye.xml" ),
@@ -59,7 +59,6 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
 
     cv::Mat frame_gray;
     cv::imshow( "window_name", img );
-    img.
 
     cv::cvtColor( img, frame_gray, cv::COLOR_BGR2GRAY );
     cv::imshow( "window_name", frame_gray );

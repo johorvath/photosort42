@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     facedetect_ ( new facedetector( "hallo") ),
-    face_eigen_ ( new facerecognizer_eigen ("hallo") )
+    facerecognizer_ ( new facerecognizer("hallo") )
 {
     ui->setupUi(this);
 
@@ -31,7 +31,8 @@ void MainWindow::on_pushButton_sort_clicked()       //Sortierbutton
     img_ = cv::imread( ui->textEdit_photoInput->toPlainText().toStdString(), CV_LOAD_IMAGE_COLOR );
     facedetect_->detect_face( comp_img_, faces );
 //    face_eigen_->recognize_face( faces, comp_img_ );
-    face_eigen_->test();
+    facerecognizer_->recognize_test();
+
 
 }
 

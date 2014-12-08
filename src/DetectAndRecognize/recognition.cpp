@@ -1,8 +1,7 @@
 #include "recognition.hpp"
 
 
-facerecognizer::facerecognizer (std::string const& test, recognize_mode const& mode ):
-    mode_( mode )
+facerecognizer::facerecognizer (std::string const& test )
 {
     model_path_ ="/home/johannes/tmp";
 }
@@ -39,7 +38,7 @@ void facerecognizer::update_model( recognize_mode const& mode, std::vector<cv::M
     }
 }
 
-void facerecognizer::load_model ( recognize_mode const& mode, cv::Ptr <cv::FaceRecognizer>& model, std::string const& dir )
+void facerecognizer::load_model ( recognize_mode const& mode, std::string const& dir )
 {
     boost::filesystem::path path ( dir );
     switch ( mode )
@@ -188,8 +187,10 @@ static cv::Mat norm_0_255( cv::InputArray _src) {
 
 
 
-void facerecognizer::recognize_test ( std::vector <cv::Mat>& images, std::vector <int>& labels)
+void facerecognizer::recognize_test ()
 {
+    std::vector <cv::Mat> images;
+    std::vector <int> labels;
     std::string fn_csv = "/home/johannes/Documents/test.csv";
     try {
             helper::read_csv( fn_csv, images, labels );
@@ -207,7 +208,7 @@ void facerecognizer::recognize_test ( std::vector <cv::Mat>& images, std::vector
     images.pop_back();
     labels.pop_back();
 
-    cv::Ptr<cv::FaceRecognizer> model = cv::createEigenFaceRecognizer( 10 );
+    cv::Ptr<cv::FaceRecognizer> model = cv::createFisherFaceRecognizer();
 
     model->train(images, labels);
     model->save( "test.yml" );
