@@ -8,6 +8,7 @@
 #include "DetectAndRecognize/detection.hpp"
 #include "DetectAndRecognize/recog_Eigen.hpp"
 #include "DetectAndRecognize/recognition.hpp"
+#include "DetectAndRecognize/face_alignement.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -36,7 +37,7 @@ private:
     cv::Mat comp_img_;
     cv::Mat img_;
     facerecognizer *facerecognizer_;
-
+    face_alignement *face_aligner_;
 };
 
 #endif // MAINWINDOW_H

@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include <stdio.h>
+#include <vector>
+
 #include "libs/easylogging++.h"
 
 
@@ -13,11 +15,13 @@ public:
     face_alignement( std::string const& test );
     ~face_alignement();
 
-    void CropFace ( cv::Mat img );
+    void CropFace ( cv::Mat& img );
+
+    void test ();
 
 
 private:
-    void ScaleRotateTranslate ( cv::Mat img, );
+    void ScaleRotateTranslate ( cv::Mat& img );
 
 
 

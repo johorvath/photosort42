@@ -59,7 +59,6 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
 
     cv::Mat frame_gray;
     cv::imshow( "window_name", img );
-    img.
 
     cv::cvtColor( img, frame_gray, cv::COLOR_BGR2GRAY );
     cv::imshow( "window_name", frame_gray );
