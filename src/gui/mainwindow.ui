@@ -33,6 +33,9 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>start sort mechanism</string>
+    </property>
     <property name="text">
      <string>sort</string>
     </property>
@@ -65,6 +68,9 @@
       <width>181</width>
       <height>91</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string>Select a sort mechanism for your photos</string>
     </property>
     <property name="title">
      <string>sort mechanism</string>
@@ -118,8 +124,14 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="toolTip">
+     <string>Select photos from a folder to sort. You have to choose at least 2 photos.</string>
+    </property>
     <property name="text">
-     <string>select photos from a folder to sort</string>
+     <string>photos</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_compareInput">
@@ -142,8 +154,11 @@
       <strikeout>false</strikeout>
      </font>
     </property>
+    <property name="toolTip">
+     <string>Choose a comparative picture of a person for the sort mechanism</string>
+    </property>
     <property name="text">
-     <string>choose a comparative picture of a person</string>
+     <string>comparative picture</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_compareImage">
@@ -177,8 +192,11 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>Select an output folder for the result</string>
+    </property>
     <property name="text">
-     <string>select output folder</string>
+     <string>output</string>
     </property>
    </widget>
   </widget>
