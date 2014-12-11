@@ -6,7 +6,6 @@
 #include <opencv2/core/core.hpp>
 
 #include "DetectAndRecognize/detection.hpp"
-#include "DetectAndRecognize/recog_Eigen.hpp"
 #include "DetectAndRecognize/recognition.hpp"
 #include "DetectAndRecognize/face_alignement.hpp"
 
@@ -36,7 +35,12 @@ private:
     std::string comp_file_;
     cv::Mat comp_img_;
     cv::Mat img_;
-    facerecognizer *facerecognizer_;
+    facerecognizer *facerecognizer_eigen_;
+    facerecognizer *facerecognizer_fisher_;
+    facerecognizer *facerecognizer_lbp_;
+    cv::Ptr <cv::FaceRecognizer> model_eigen_;
+    cv::Ptr <cv::FaceRecognizer> model_fisher_;
+    cv::Ptr <cv::FaceRecognizer> model_lbp_;
     face_alignement *face_aligner_;
 };
 

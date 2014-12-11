@@ -19,10 +19,12 @@ enum recognize_mode {
 class facerecognizer
 {
 public:
-    facerecognizer( std::string const& test );
-    ~facerecognizer();
+    facerecognizer( cv::Ptr <cv::FaceRecognizer> model );
+//    ~facerecognizer();
 
-    void update_model ( recognize_mode const& mode, std::vector <cv::Mat>& face, std::vector <int>& label );
+    void update_model ( cv::Mat const& face, int const& label);
+
+    void train_model (std::vector < cv::Mat > const& images, std::vector < int > const& labels);
 
     int recognize_face ( recognize_mode const& mode, cv::Mat const& comp_face );
 
@@ -30,16 +32,14 @@ public:
 
     void recognize ( std::vector <cv::Mat>& images, std::vector <int>& labels);
 
-    void train_model ( recognize_mode const& mode, std::vector < cv::Mat > const& images, std::vector < int > const& label );
+    cv::Ptr <cv::FaceRecognizer> model_;
+
 
 private:
     void load_model (recognize_mode const& mode, std::string const& dir );
     void scale_mats ( std::vector < cv::Mat >& imgs );
     std::string model_path_;
-    cv::Ptr <cv::FaceRecognizer> model_eigen_;
-    cv::Ptr <cv::FaceRecognizer> model_fisher_;
-    cv::Ptr <cv::FaceRecognizer> model_lbp_;
-    recognize_mode mode_;
+
 
     int xmin_;
     int xmax_;
@@ -49,6 +49,27 @@ private:
     int yresize_;
     int xsum_;
     int ysum_;
-
-
 };
+
+/*
+class facerecognizer_eigen : public facerecognizer
+{
+public:
+    facerecognizer_eigen();
+    ~facerecognizer_eigen();
+};
+
+class facerecognizer_fisher : public facerecognizer
+{
+public:
+    facerecognizer_fisher();
+    ~facerecognizer_fisher();
+};
+
+class facerecognizer_lbp : public facerecognizer
+{
+public:
+    facerecognizer_lbp();
+    ~facerecognizer_lbp();
+};
+*/

@@ -1,15 +1,31 @@
 #include "recognition.hpp"
 
-
-facerecognizer::facerecognizer (std::string const& test )
+facerecognizer::facerecognizer ( cv::Ptr <cv::FaceRecognizer> model ) :
+    model_ (model)
 {
     model_path_ ="/home/johannes/tmp";
 }
-
+/*
 facerecognizer::~facerecognizer ()
 {
 
 }
+*/
+void facerecognizer::train_model( std::vector <cv::Mat> const& images, std::vector<int> const& labels )
+{
+    model_->train( images, labels );
+}
+
+void facerecognizer::update_model( cv::Mat const& face, int const& label )
+{
+    std::vector <cv::Mat> faces;
+    std::vector <int> labels;
+    labels.push_back( label );
+    faces.push_back( face );
+    model_->update( faces, labels );
+}
+
+/*
 
 void facerecognizer::update_model( recognize_mode const& mode, std::vector<cv::Mat>& images, std::vector<int>& label )
 {
@@ -208,7 +224,7 @@ void facerecognizer::recognize_test ()
     images.pop_back();
     labels.pop_back();
 
-    cv::Ptr<cv::FaceRecognizer> model = cv::createFisherFaceRecognizer();
+    cv::Ptr<cv::FaceRecognizer> model = cv::createEigenFaceRecognizer();
 
     model->train(images, labels);
     model->save( "test.yml" );
@@ -217,6 +233,7 @@ void facerecognizer::recognize_test ()
 
     std::cout << predictedLabel << " " << testLabel << std::endl;
 }
+*/
     //int height = images[0].rows;
     /* ONLY BLABLA
     // Quit if there are not enough images for this demo.

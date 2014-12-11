@@ -8,9 +8,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     facedetect_ ( new facedetector( "hallo") ),
-    facerecognizer_ ( new facerecognizer("hallo") ),
-    face_aligner_ ( new face_alignement("hallo") )
+    face_aligner_ ( ),
+    facerecognizer_eigen_ ( new facerecognizer(cv::createEigenFaceRecognizer())),
+    facerecognizer_fisher_ ( new facerecognizer(cv::createFisherFaceRecognizer())),
+    facerecognizer_lbp_ ( new facerecognizer(cv::createLBPHFaceRecognizer()))
 {
+
     ui->setupUi(this);
 
     //DEBUG
@@ -34,7 +37,7 @@ void MainWindow::on_pushButton_sort_clicked()       //Sortierbutton
     facedetect_->detect_face( comp_img_, faces );
     face_aligner_->test();
 //    face_eigen_->recognize_face( faces, comp_img_ );
-    facerecognizer_->recognize_test();
+
 }
 
 

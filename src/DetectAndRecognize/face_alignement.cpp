@@ -2,6 +2,7 @@
 #include "libs/flandmark_detector.h"
 #include "libs/linreg.h"
 
+/*
 face_alignement::face_alignement ( std::string const& test )
 {
 }
@@ -10,6 +11,7 @@ face_alignement::~face_alignement ()
 {
 
 }
+*/
 /*
  * Copyright (c) 2013. Alberto Fernandez Villan <alberto[dot]fernandez[at]fundacionctic[dot]org>.
  * Released to public domain under terms of the BSD Simplified license.
@@ -32,9 +34,6 @@ face_alignement::~face_alignement ()
 #include "libs/linreg.h"
 #include <opencv2/opencv.hpp>
 
-using namespace cv;
-using namespace std;
-
 //------------------------------------------------------------------------------
 // Record the execution time of some code, in milliseconds. By Shervin Emami, May 4th 2011.
 // eg:
@@ -44,14 +43,14 @@ using namespace std;
 //	STOP_TIMING(myTimer);
 //	SHOW_TIMING(myTimer, "My Timer");
 //------------------------------------------------------------------------------
-#define DECLARE_TIMING(s)	int64 timeStart_##s; int64 timeDiff_##s; int64 timeTally_##s = 0; int64 countTally_##s = 0
-#define START_TIMING(s)		timeStart_##s = cvGetTickCount()
-#define STOP_TIMING(s)		timeDiff_##s = (cvGetTickCount() - timeStart_##s); timeTally_##s += timeDiff_##s; countTally_##s++
-#define GET_TIMING(s)		(double)(0.001 * ( (double)timeDiff_##s / (double)cvGetTickFrequency() ))
-#define GET_AVERAGE_TIMING(s)	(double)(countTally_##s ? 0.001 * ( (double)timeTally_##s / ((double)countTally_##s * cvGetTickFrequency()) ) : 0)
-#define GET_TIMING_COUNT(s)	(int)(countTally_##s)
-#define CLEAR_AVERAGE_TIMING(s)	timeTally_##s = 0; countTally_##s = 0
-#define SHOW_TIMING(s, msg)	printf("%s time: \t %dms \t (%dms average across %d runs).\n", msg, cvRound(GET_TIMING(s)), cvRound(GET_AVERAGE_TIMING(s)), GET_TIMING_COUNT(s) )
+//#define DECLARE_TIMING(s)	int64 timeStart_##s; int64 timeDiff_##s; int64 timeTally_##s = 0; int64 countTally_##s = 0
+//#define START_TIMING(s)		timeStart_##s = cvGetTickCount()
+//#define STOP_TIMING(s)		timeDiff_##s = (cvGetTickCount() - timeStart_##s); timeTally_##s += timeDiff_##s; countTally_##s++
+//#define GET_TIMING(s)		(double)(0.001 * ( (double)timeDiff_##s / (double)cvGetTickFrequency() ))
+//#define GET_AVERAGE_TIMING(s)	(double)(countTally_##s ? 0.001 * ( (double)timeTally_##s / ((double)countTally_##s * cvGetTickFrequency()) ) : 0)
+//#define GET_TIMING_COUNT(s)	(int)(countTally_##s)
+//#define CLEAR_AVERAGE_TIMING(s)	timeTally_##s = 0; countTally_##s = 0
+//#define SHOW_TIMING(s, msg)	printf("%s time: \t %dms \t (%dms average across %d runs).\n", msg, cvRound(GET_TIMING(s)), cvRound(GET_AVERAGE_TIMING(s)), GET_TIMING_COUNT(s) )
 
 /** enum with all landmarks (0-7)--> flandmarks and 8,9 added */
 enum landmark_pos {
@@ -67,8 +66,13 @@ enum landmark_pos {
     RIGHT_EYE_ALIGN = 9
 };
 
+face_alignement::face_alignement()
+{
+
+}
+
 /** detect biggest face */
-Rect detect_face(const Mat& image, CascadeClassifier cascade){
+cv::Rect face_alignement::detect_face(const cv::Mat& image, cv::CascadeClassifier& cascade){
     const double scale_factor = 1.1;
     const int min_neighbours = 2;
     const int flags = CV_HAAR_FIND_BIGGEST_OBJECT | CV_HAAR_DO_CANNY_PRUNING | CV_HAAR_SCALE_IMAGE;
@@ -89,7 +93,7 @@ Rect detect_face(const Mat& image, CascadeClassifier cascade){
 }
 
 /** rotate points based on rot_mat */
-void get_rotated_points(const std::vector<cv::Point2d> &points, std::vector<cv::Point2d> &dst_points, const cv::Mat &rot_mat){
+void face_alignement::get_rotated_points(const std::vector<cv::Point2d> &points, std::vector<cv::Point2d> &dst_points, const cv::Mat &rot_mat){
 
     for(int i=0; i<points.size(); i++){
 
@@ -109,7 +113,7 @@ void get_rotated_points(const std::vector<cv::Point2d> &points, std::vector<cv::
 }
 
 /** show landmarks in an image */
-void show_landmarks(const std::vector<cv::Point2d> &landmarks, const cv::Mat& image, const string &named_window){
+void face_alignement::show_landmarks(const std::vector<cv::Point2d> &landmarks, const cv::Mat& image, const string &named_window){
 
     Mat result;
     cvtColor( image, result, CV_GRAY2BGR );
@@ -127,7 +131,9 @@ void show_landmarks(const std::vector<cv::Point2d> &landmarks, const cv::Mat& im
 
 
 /** aligns the face based on the recalculated positions of the eyes and aligns also the landmarks*/
-double align(const Mat &image, Mat &dst_image, vector<Point2d> &landmarks, vector<Point2d> &dst_landmarks){
+double face_alignement::align(cv::Mat& image, cv::Mat& dst_image,
+                              std::vector<cv::Point2d> &landmarks,
+                              std::vector<cv::Point2d> &dst_landmarks){
     const double DESIRED_LEFT_EYE_X = 0.27;     // Controls how much of the face is visible after preprocessing.
     const double DESIRED_LEFT_EYE_Y = 0.4;
 
@@ -169,7 +175,7 @@ double align(const Mat &image, Mat &dst_image, vector<Point2d> &landmarks, vecto
 }
 
 /** detects landmarks using flandmakrs and add two more landmakrs to be used to alignt the face*/
-vector<cv::Point2d> detectLandmarks(FLANDMARK_Model* model, const Mat & image, const Rect & face){
+vector<cv::Point2d> face_alignement::detectLandmarks(FLANDMARK_Model* model, const Mat & image, const Rect & face){
 
     vector<Point2d> landmarks;
 
@@ -215,8 +221,8 @@ void face_alignement::test ()
 {
 
     Mat image = imread("/home/johannes/Pictures/mueller.jpg");
-    string fn_haar = "/lfs/work/project_SOTE/photosort42/src/libs/haarcascade_frontalface_alt.xml";
-    string flandmarks_model_name = "/lfs/work/project_SOTE/photosort42/src/libs/flandmark_model.dat";
+    string fn_haar = "/home/johannes/work/photosort42/src/libs/haarcascade_frontalface_alt.xml";
+    string flandmarks_model_name = "/home/johannes/work/photosort42/src/libs/flandmark_model.dat";
 
     if(image.empty()){
         cout<<"error loading image. Check path"<<endl;
@@ -251,8 +257,8 @@ void face_alignement::test ()
     Mat aligned_image;
     vector<cv::Point2d> aligned_landmarks;
 
-    DECLARE_TIMING(alignTimer);
-    START_TIMING(alignTimer);
+//    DECLARE_TIMING(alignTimer);
+//    START_TIMING(alignTimer);
 
     // Detect landmarks
     vector<cv::Point2d> landmarks = detectLandmarks(model, gray_image, Rect(r.x,r.y,r.width,r.height));
@@ -265,14 +271,14 @@ void face_alignement::test ()
     //align the face
     align(gray_image,aligned_image,landmarks,aligned_landmarks);
 
-    STOP_TIMING(alignTimer);
-    SHOW_TIMING(alignTimer, "Alignment of image and landmark points");
+//    STOP_TIMING(alignTimer);
+//    SHOW_TIMING(alignTimer, "Alignment of image and landmark points");
 
     if(!aligned_image.empty()){
         show_landmarks(aligned_landmarks,aligned_image,"aligned landmarks");
     }
 
-    waitKey(0);
+//    waitKey(0);
 
 }
 
