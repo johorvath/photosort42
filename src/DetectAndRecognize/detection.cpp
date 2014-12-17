@@ -57,6 +57,10 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
     std::vector<cv::Rect> eyes;
     std::vector<cv::Rect> eyes_glass;
 
+    const cv::Size min_size = cv::Size(48, 48);
+    const cv::Size max_size = cv::Size();
+
+
     cv::Mat frame_gray;
     cv::imshow( "window_name", img );
 
@@ -66,7 +70,7 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
     cv::imshow( "window_name", frame_gray );
 
     //-- Detect faces
-    face_cascade_.detectMultiScale( frame_gray, faces_tmp, 1.1, 2, 0|cv::CASCADE_SCALE_IMAGE, cv::Size(30, 30) );
+    face_cascade_.detectMultiScale( frame_gray, faces_tmp, 1.1, 2, 0|cv::CASCADE_SCALE_IMAGE, min_size, max_size );
 
     for ( size_t i = 0; i < faces_tmp.size(); i++ )
     {

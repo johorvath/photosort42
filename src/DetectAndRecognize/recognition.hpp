@@ -19,6 +19,7 @@ enum recognize_mode {
 class facerecognizer
 {
 public:
+    facerecognizer( cv::Ptr <cv::FaceRecognizer> model , const std::string &path );
     facerecognizer( cv::Ptr <cv::FaceRecognizer> model );
 //    ~facerecognizer();
 
@@ -27,6 +28,10 @@ public:
     void train_model (std::vector < cv::Mat > const& images, std::vector < int > const& labels);
 
     int recognize_face ( recognize_mode const& mode, cv::Mat const& comp_face );
+
+    void save_model ( std::string const& path );
+
+    void load_model ( std::string const& path );
 
     void recognize_test ();
 
@@ -51,12 +56,12 @@ private:
     int ysum_;
 };
 
-/*
 class facerecognizer_eigen : public facerecognizer
 {
-public:
-    facerecognizer_eigen();
-    ~facerecognizer_eigen();
+
+//public:
+//    facerecognizer_eigen();
+//    ~facerecognizer_eigen();
 };
 
 class facerecognizer_fisher : public facerecognizer
@@ -72,4 +77,4 @@ public:
     facerecognizer_lbp();
     ~facerecognizer_lbp();
 };
-*/
+

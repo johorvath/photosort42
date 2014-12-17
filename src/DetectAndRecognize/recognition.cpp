@@ -5,6 +5,15 @@ facerecognizer::facerecognizer ( cv::Ptr <cv::FaceRecognizer> model ) :
 {
     model_path_ ="/home/johannes/tmp";
 }
+
+facerecognizer::facerecognizer ( cv::Ptr <cv::FaceRecognizer> model, std::string const& path ) :
+    model_ (model)
+{
+    model_->load( path );
+    model_path_ ="/home/johannes/tmp";
+}
+
+
 /*
 facerecognizer::~facerecognizer ()
 {
@@ -24,6 +33,12 @@ void facerecognizer::update_model( cv::Mat const& face, int const& label )
     faces.push_back( face );
     model_->update( faces, labels );
 }
+
+void facerecognizer::save_model ( std::string const& path)
+{
+    model_->save( path );
+}
+
 
 /*
 
