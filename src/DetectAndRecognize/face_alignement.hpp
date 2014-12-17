@@ -15,10 +15,12 @@
 class face_alignement
 {
 public:
-    face_alignement();
+    face_alignement( std::string& flandmark_path );
     ~face_alignement();
 
     cv::Rect detect_face ( cv::Mat const& image, cv::CascadeClassifier& cascade);
+
+    void align_face ( cv::Rect& face);
 
     void get_rotated_points ( std::vector<cv::Point2d> const& points, std::vector<cv::Point2d>& dst_points, cv::Mat const& rot_mat);
 
@@ -35,6 +37,8 @@ public:
 
 private:
     void ScaleRotateTranslate ( cv::Mat& img );
+
+    std::string flandmark_path_;
 
 
 

@@ -66,7 +66,8 @@ enum landmark_pos {
     RIGHT_EYE_ALIGN = 9
 };
 
-face_alignement::face_alignement()
+face_alignement::face_alignement( std::string& flandmark_path ):
+    flandmark_path_ ( flandmark_path )
 {
 
 }
@@ -217,6 +218,24 @@ vector<cv::Point2d> face_alignement::detectLandmarks(FLANDMARK_Model* model, con
     return landmarks;
 }
 
+void face_alignement::align_face( cv::Rect& face )
+{
+    string flandmarks_model_name = "/home/johannes/work/photosort42/src/libs/flandmark_model.dat";
+
+    /*
+    Mat gray_image;
+    cvtColor(face, gray_image, CV_BGR2GRAY);
+
+    FLANDMARK_Model* model = flandmark_init(flandmarks_model_name.c_str());
+
+    vector<cv::Point2d> aligned_landmarks;
+
+    vector<cv::Point2d> landmarks = detectLandmarks(model, gray_image, Rect(r.x,r.y,r.width,r.height));
+    */
+
+
+}
+
 void face_alignement::test ()
 {
 
@@ -257,11 +276,13 @@ void face_alignement::test ()
     Mat aligned_image;
     vector<cv::Point2d> aligned_landmarks;
 
+    vector<cv::Point2d> landmarks = detectLandmarks(model, gray_image, Rect(r.x,r.y,r.width,r.height));
+
 //    DECLARE_TIMING(alignTimer);
 //    START_TIMING(alignTimer);
 
     // Detect landmarks
-    vector<cv::Point2d> landmarks = detectLandmarks(model, gray_image, Rect(r.x,r.y,r.width,r.height));
+
 
     if(landmarks.size() == 0){
         cout<<"landmarks not found on the face"<<endl;
