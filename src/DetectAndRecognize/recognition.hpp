@@ -58,10 +58,9 @@ private:
 
 class facerecognizer_eigen : public facerecognizer
 {
-
-//public:
-//    facerecognizer_eigen();
-//    ~facerecognizer_eigen();
+public:
+    facerecognizer_eigen();
+    ~facerecognizer_eigen();
 };
 
 class facerecognizer_fisher : public facerecognizer

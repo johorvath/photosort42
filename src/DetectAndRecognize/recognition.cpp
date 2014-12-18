@@ -20,6 +20,12 @@ facerecognizer::~facerecognizer ()
 
 }
 */
+
+void facerecognizer::load_model( const std::string &path )
+{
+    model_->load( path );
+}
+
 void facerecognizer::train_model( std::vector <cv::Mat> const& images, std::vector<int> const& labels )
 {
     model_->train( images, labels );
