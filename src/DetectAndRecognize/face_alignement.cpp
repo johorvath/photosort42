@@ -218,11 +218,11 @@ vector<cv::Point2d> face_alignement::detectLandmarks(FLANDMARK_Model* model, con
     return landmarks;
 }
 
-void face_alignement::align_face( cv::Rect& face )
+void face_alignement::align_face( cv::Mat& face )
 {
     string flandmarks_model_name = "/home/johannes/work/photosort42/src/libs/flandmark_model.dat";
+    string fn_haar = "/home/johannes/work/photosort42/src/libs/haarcascade_frontalface_alt.xml";
 
-    /*
     Mat gray_image;
     cvtColor(face, gray_image, CV_BGR2GRAY);
 
@@ -230,9 +230,34 @@ void face_alignement::align_face( cv::Rect& face )
 
     vector<cv::Point2d> aligned_landmarks;
 
-    vector<cv::Point2d> landmarks = detectLandmarks(model, gray_image, Rect(r.x,r.y,r.width,r.height));
-    */
+    CascadeClassifier face_cascade;
+    face_cascade.load(fn_haar);
 
+    if(face_cascade.empty()){
+        cout<<"error loading face_cascade. Check path"<<endl;
+        exit(1);
+    }
+
+    // Find face in image:
+    Rect r = detect_face(face, face_cascade);
+
+    vector<cv::Point2d> landmarks = detectLandmarks(model, gray_image, Rect(r.x,r.y,r.width,r.height));
+
+    if(landmarks.size() == 0){
+        cout<<"landmarks not found on the face"<<endl;
+        exit(1);
+    }
+    Mat aligned_image;
+
+    //align the face
+    align(gray_image,aligned_image,landmarks,aligned_landmarks);
+
+//    STOP_TIMING(alignTimer);
+//    SHOW_TIMING(alignTimer, "Alignment of image and landmark points");
+
+    if(!aligned_image.empty()){
+        show_landmarks(aligned_landmarks,aligned_image,"aligned landmarks");
+    }
 
 }
 
