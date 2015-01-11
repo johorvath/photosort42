@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include "src/helper.hpp"
 #include "libs/easylogging++.h"
+#include "properties.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -110,3 +111,20 @@ void MainWindow::on_checkBox_onePerson_toggled(bool checked)
     }
 }
 
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    Properties prop;
+    prop.setModal(true);
+    prop.exec();
+
+}
+
+void MainWindow::on_pushButton_data_clicked()
+{
+    QString recogfile = QFileDialog::getOpenFileName(
+                this,
+                "Select a *csv file with models for sorting",
+                "/home",
+                "data (*.csv)");
+}

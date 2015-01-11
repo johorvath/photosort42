@@ -25,11 +25,14 @@ SOURCES += src/main.cpp\
     src/helper.cpp \
     DetectAndRecognize/detection.cpp \
     DetectAndRecognize/recognition.cpp \
+    properties.cpp
 
 HEADERS  += gui/mainwindow.h \
     src/helper.hpp \
     libs/easylogging++.h \
     DetectAndRecognize/detection.hpp \
     DetectAndRecognize/recognition.hpp \
+    properties.h
 
-FORMS    += gui/mainwindow.ui
+FORMS    += gui/mainwindow.ui \
+    properties.ui

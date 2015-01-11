@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Properties</class>
+ <widget class="QDialog" name="Properties">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>253</width>
+    <height>248</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QGroupBox" name="groupBox_algorithm">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>331</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>sort algorithm</string>
+   </property>
+   <widget class="QRadioButton" name="radioB_fisher">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>117</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>fisher</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioB_eigen">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>71</y>
+      <width>117</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>eigen</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioB_lbp">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>117</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>lbp</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButton_algorithm">
+   <property name="geometry">
+    <rect>
+     <x>53</x>
+     <y>189</y>
+     <width>99</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
