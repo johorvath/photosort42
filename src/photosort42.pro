@@ -29,8 +29,6 @@ SOURCES += src/main.cpp\
     DetectAndRecognize/detection.cpp \
     DetectAndRecognize/face_alignement.cpp \
     DetectAndRecognize/recognition.cpp \
-    DetectAndRecognize/recog_Eigen.cpp \
-    DetectAndRecognize/recog_Fisher.cpp \
     libs/linreg.cpp
 
 HEADERS  += gui/mainwindow.h \
@@ -41,8 +39,6 @@ HEADERS  += gui/mainwindow.h \
     DetectAndRecognize/detection.hpp \
     DetectAndRecognize/face_alignement.hpp \
     DetectAndRecognize/recognition.hpp \
-    DetectAndRecognize/recog_Eigen.hpp \
-    DetectAndRecognize/recog_Fisher.hpp \
     libs/linreg.h
 
 FORMS    += gui/mainwindow.ui
