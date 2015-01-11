@@ -59,7 +59,7 @@ QSqlError facerecognizer::lastError()
     return db.lastError();
     }
 
-int facerecognizer::insertModel(QString firstname, QString lastname, int mask)
+int facerecognizer::insertModel(QString firstname, QString lastname, QByteArray mask)
     {
     int newId = -1;
     bool ret = false;
@@ -69,8 +69,8 @@ int facerecognizer::insertModel(QString firstname, QString lastname, int mask)
 
         // NULL = is the keyword for the autoincrement to generate next value
         QSqlQuery query;
-        ret = query.exec(QString("insert into person values(NULL,'%1','%2',%3)")
-        .arg(firstname).arg(lastname).arg(mask));
+        ret = query.exec(QString("insert into person values(NULL,'%1','%2',%3)")    //Anfrage Datenbank
+        .arg(firstname).arg(lastname));
 
         //get database given autoincrement value
         if (ret)
@@ -93,7 +93,7 @@ bool facerecognizer::createModelTable()
                   "(id integer primary key, "
                   "firstname varchar(30), "
                   "lastname varchar(30), "
-                  "mask integer)");
+                  "mask Mat)");
 
         }
     return ret;
@@ -109,7 +109,7 @@ bool facerecognizer::getModel(int id, RecognitionModel*& model)
         model->id = query.value(0).toInt();
         model->firstname = query.value(1).toString();
         model->lastname = query.value(2).toString();
-        model->mask = query.value(3).toInt();
+        model->mask = query.value(3).toByteArray();
         ret = true;
         }
 

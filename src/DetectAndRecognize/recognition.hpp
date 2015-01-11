@@ -18,7 +18,7 @@ class RecognitionModel      //class for using the database
     int id;
     QString firstname;
     QString lastname;
-    int mask;
+    QByteArray mask;
 };
 
 class facerecognizer
@@ -29,11 +29,11 @@ public:
 
 public:                 //database
     bool openDB();
-    bool deleteDB();
-    QSqlError lastError();
+    bool deleteDB();    
     bool createModelTable();
-    int insertModel(QString firstname, QString lastname, int mask);
+    int insertModel(QString firstname, QString lastname, QByteArray mask);
     bool getModel(int id, RecognitionModel*& model);
+    QSqlError lastError();
 
 private:
         QSqlDatabase db;
