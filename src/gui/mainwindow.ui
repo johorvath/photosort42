@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>577</width>
-    <height>366</height>
+    <width>669</width>
+    <height>518</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,93 +17,60 @@
    <widget class="QTextEdit" name="textEdit_photoInput">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>0</y>
-      <width>71</width>
-      <height>31</height>
+      <x>290</x>
+      <y>2</y>
+      <width>241</width>
+      <height>41</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>-11</y>
-      <width>411</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>select photos from a folder</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_sort">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>250</y>
-      <width>121</width>
+      <x>49</x>
+      <y>382</y>
+      <width>231</width>
       <height>41</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>start sort mechanism</string>
+    </property>
     <property name="text">
-     <string>sort</string>
+     <string>start</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit_compareInput">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>50</y>
-      <width>71</width>
-      <height>31</height>
+      <x>289</x>
+      <y>135</y>
+      <width>241</width>
+      <height>41</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>50</y>
-      <width>331</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>choose a comparative picture of a person</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit_output">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>100</y>
-      <width>151</width>
-      <height>31</height>
+      <x>289</x>
+      <y>271</y>
+      <width>241</width>
+      <height>41</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>99</y>
-      <width>311</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>output folder</string>
     </property>
    </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>150</y>
-      <width>291</width>
+      <x>58</x>
+      <y>80</y>
+      <width>181</width>
       <height>91</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string>Select a sort mechanism for your photos</string>
     </property>
     <property name="title">
      <string>sort mechanism</string>
@@ -111,7 +78,7 @@
     <widget class="QCheckBox" name="checkBox_landscape">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>-1</x>
        <y>30</y>
        <width>291</width>
        <height>22</height>
@@ -124,7 +91,7 @@
     <widget class="QCheckBox" name="checkBox_onePerson">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>-1</x>
        <y>50</y>
        <width>281</width>
        <height>22</height>
@@ -137,7 +104,7 @@
     <widget class="QCheckBox" name="checkBox_group">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>-1</x>
        <y>70</y>
        <width>211</width>
        <height>22</height>
@@ -151,40 +118,202 @@
    <widget class="QPushButton" name="pushButton_photoInput">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>0</y>
-      <width>71</width>
-      <height>27</height>
+      <x>50</x>
+      <y>2</y>
+      <width>231</width>
+      <height>41</height>
      </rect>
     </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="toolTip">
+     <string>Select photos from a folder to sort. You have to choose at least 2 photos.</string>
+    </property>
     <property name="text">
-     <string>Browse</string>
+     <string>photos</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_compareInput">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>50</y>
-      <width>71</width>
-      <height>31</height>
+      <x>289</x>
+      <y>90</y>
+      <width>241</width>
+      <height>41</height>
      </rect>
     </property>
+    <property name="minimumSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <strikeout>false</strikeout>
+     </font>
+    </property>
+    <property name="toolTip">
+     <string>Choose a comparative picture of a person for the sort mechanism</string>
+    </property>
     <property name="text">
-     <string>Browse</string>
+     <string>comparative picture</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_compareImage">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>100</y>
+      <x>539</x>
+      <y>54</y>
       <width>111</width>
       <height>141</height>
      </rect>
     </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_photoOutput">
+    <property name="geometry">
+     <rect>
+      <x>49</x>
+      <y>270</y>
+      <width>231</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Select an output folder for the result</string>
+    </property>
+    <property name="text">
+     <string>output</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_data">
+    <property name="geometry">
+     <rect>
+      <x>49</x>
+      <y>213</y>
+      <width>231</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Select a *csv file to compare the photos with a selection of models.</string>
+    </property>
+    <property name="text">
+     <string>data for face recognition</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit">
+    <property name="geometry">
+     <rect>
+      <x>289</x>
+      <y>213</y>
+      <width>241</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_AddOpt">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>326</y>
+      <width>231</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>additional options</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>22</x>
+      <y>13</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>1.</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>24</x>
+      <y>83</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>2.</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>21</x>
+      <y>225</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>3.</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>21</x>
+      <y>282</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>4.</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>22</x>
+      <y>338</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>5.</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>21</x>
+      <y>395</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>6.</string>
     </property>
    </widget>
   </widget>
@@ -193,7 +322,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>577</width>
+     <width>669</width>
      <height>25</height>
     </rect>
    </property>

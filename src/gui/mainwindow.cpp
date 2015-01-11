@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include "src/helper.hpp"
 #include "libs/easylogging++.h"
+#include "properties.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,6 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //TODO: remove
     ui->textEdit_photoInput->setText( "/home/johannes/Pictures/dfb.png");
     ui->textEdit_compareInput->setText( "/home/johannes/Pictures/dfb.png");
+    ui->centralWidget->setFixedSize(this->width(), this->height());
+    ui->groupBox->setDisabled(true);
+    ui->pushButton_compareInput->setDisabled(true);
+
 }
 
 MainWindow::~MainWindow()
@@ -77,4 +82,49 @@ void MainWindow::on_pushButton_photoInput_clicked()
         input_files_.push_back( selection[i].toStdString() );
         helper::check_file( input_files_[i] );
     }
+
+    if(!selection.isEmpty())
+    {
+        ui->groupBox->setDisabled(false);
+    }
+}
+
+void MainWindow::on_pushButton_photoOutput_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(
+                this, tr("Open Directory"),
+                "/home",
+                QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+}
+
+void MainWindow::on_checkBox_onePerson_toggled(bool checked)
+{
+    if(checked == true)
+    {
+        ui->pushButton_compareInput->setDisabled(false);
+
+    }
+    else
+    {
+        ui->pushButton_compareInput->setDisabled(true);
+
+    }
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    Properties prop;
+    prop.setModal(true);
+    prop.exec();
+
+}
+
+void MainWindow::on_pushButton_data_clicked()
+{
+    QString recogfile = QFileDialog::getOpenFileName(
+                this,
+                "Select a *csv file with models for sorting",
+                "/home",
+                "data (*.csv)");
 }

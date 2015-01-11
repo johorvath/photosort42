@@ -25,6 +25,16 @@ private slots:
 
     void on_pushButton_photoInput_clicked();
 
+    void on_pushButton_photoOutput_clicked();
+
+    void on_checkBox_onePerson_toggled(bool checked);
+
+
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_data_clicked();
+
 private:
     Ui::MainWindow *ui;
     std::vector < std::string > input_files_;
