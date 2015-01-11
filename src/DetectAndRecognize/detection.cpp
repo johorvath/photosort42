@@ -70,7 +70,7 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
     cv::imshow( "window_name", frame_gray );
 
     //-- Detect faces
-    face_cascade_.detectMultiScale( frame_gray, faces_tmp, 1.1, 2, 0|cv::CASCADE_SCALE_IMAGE, min_size, max_size );
+    face_cascade_.detectMultiScale( frame_gray, faces_tmp, 1.5, 2, 0|cv::CASCADE_SCALE_IMAGE, min_size, max_size );
 
     for ( size_t i = 0; i < faces_tmp.size(); i++ )
     {
