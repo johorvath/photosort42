@@ -18,21 +18,31 @@ LIBS += -L/usr/local/boost-1.56.0/lib/ \
         -lboost_system \
         -lboost_filesystem \
 
+
 LIBS += `pkg-config opencv --libs`
 
 SOURCES += src/main.cpp\
     gui/mainwindow.cpp \
     src/helper.cpp \
+    libs/flandmark_detector.cpp \
+    libs/liblbp.cpp \
     DetectAndRecognize/detection.cpp \
+    DetectAndRecognize/face_alignement.cpp \
     DetectAndRecognize/recognition.cpp \
-    properties.cpp
+    properties.cpp \
+    libs/linreg.cpp
+
 
 HEADERS  += gui/mainwindow.h \
     src/helper.hpp \
     libs/easylogging++.h \
+    libs/*.h \
+    libs/*.hpp \
     DetectAndRecognize/detection.hpp \
+    DetectAndRecognize/face_alignement.hpp \
     DetectAndRecognize/recognition.hpp \
-    properties.h
+    properties.h \
+    libs/linreg.h
 
 FORMS    += gui/mainwindow.ui \
     properties.ui

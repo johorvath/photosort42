@@ -8,8 +8,13 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    facedetect_ ( new facedetector( "hallo") )
+    facedetect_ ( new facedetector( "hallo") ),
+    face_aligner_ ( ),
+    facerecognizer_eigen_ ( new facerecognizer(cv::createEigenFaceRecognizer(), "/home/johannes/Pictures/test.csv")),
+    facerecognizer_fisher_ ( new facerecognizer(cv::createFisherFaceRecognizer(), "/home/johannes/Pictures/test.csv")),
+    facerecognizer_lbp_ ( new facerecognizer(cv::createLBPHFaceRecognizer(), "/home/johannes/Pictures/test.csv"))
 {
+
     ui->setupUi(this);
 
     //DEBUG
@@ -29,10 +34,28 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_sort_clicked()       //Sortierbutton
 {
+
+
     comp_file_ = ui->textEdit_compareInput->toPlainText().toStdString();
     comp_img_ = cv::imread( comp_file_, CV_LOAD_IMAGE_COLOR );
+    img_ = cv::imread( ui->textEdit_photoInput->toPlainText().toStdString(), CV_LOAD_IMAGE_COLOR );
+    for ( unsigned int i = 0; i < input_files_.size(); ++i )
+    {
+        cv::Mat img;
+        std::vector < cv::Mat > faces;
 
-    facedetect_->detect_face( comp_img_ );
+        img = cv::imread( input_files_[i], CV_LOAD_IMAGE_COLOR );
+
+        facedetect_->detect_face( img, faces );
+        for ( unsigned int j = 0; j < faces.size(); ++j )
+        {
+            face_aligner_->align_face( img );
+        }
+    }
+
+    face_aligner_->test();
+//    face_eigen_->recognize_face( faces, comp_img_ );
+
 }
 
 

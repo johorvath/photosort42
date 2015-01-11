@@ -3,8 +3,11 @@
 
 #include <QMainWindow>
 #include <iostream>
-#include "DetectAndRecognize/detection.hpp"
 #include <opencv2/core/core.hpp>
+
+#include "DetectAndRecognize/detection.hpp"
+#include "DetectAndRecognize/recognition.hpp"
+#include "DetectAndRecognize/face_alignement.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -41,6 +44,14 @@ private:
     facedetector *facedetect_;
     std::string comp_file_;
     cv::Mat comp_img_;
+    cv::Mat img_;
+    facerecognizer *facerecognizer_eigen_;
+    facerecognizer *facerecognizer_fisher_;
+    facerecognizer *facerecognizer_lbp_;
+    cv::Ptr <cv::FaceRecognizer> model_eigen_;
+    cv::Ptr <cv::FaceRecognizer> model_fisher_;
+    cv::Ptr <cv::FaceRecognizer> model_lbp_;
+    face_alignement *face_aligner_;
 };
 
 #endif // MAINWINDOW_H

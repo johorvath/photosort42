@@ -42,5 +42,31 @@ namespace helper {
     }
     return status_dir;
   }
+
+  void resize_face ( std::vector < cv::Mat > & face )
+  {
+
+  }
+
+  void read_csv( std::string const& filename, std::vector<cv::Mat>& images, std::vector<int>& labels ) {
+      char separator = ';';
+      std::ifstream file(filename.c_str(), std::ifstream::in);
+      if (!file) {
+          std::string error_message = "No valid input file was given, please check the given filename.";
+          CV_Error(CV_StsBadArg, error_message);
+      }
+      std::string line, path, classlabel;
+      while (getline(file, line)) {
+          std::stringstream liness(line);
+          std::getline(liness, path, separator);
+          std::getline(liness, classlabel);
+          if(!path.empty() && !classlabel.empty()) {
+              images.push_back(cv::imread(path, 0));
+              labels.push_back(atoi(classlabel.c_str()));
+          }
+      }
+  }
+
+
 }
 

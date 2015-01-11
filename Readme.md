@@ -1,8 +1,13 @@
-Project for the lecture "Softwaretechnologie" at the University of Applied Science Ulm"
+Project for the lecture "Softwaretechnologie" at the University of Applied Science Ulm
 
 PhotoSort42
 
 Sorting program for fotos via face detection and recognition
+
+Dependencies:
+- QT5.3
+- Boost 1.56.0
+- OpenCV 2.49
 
 QT:
 - add TODO flag:
