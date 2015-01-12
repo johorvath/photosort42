@@ -221,10 +221,16 @@ vector<cv::Point2d> face_alignement::detectLandmarks(FLANDMARK_Model* model, con
 void face_alignement::align_face( cv::Mat& face )
 {
     string flandmarks_model_name = "/home/johannes/work/photosort42/src/libs/flandmark_model.dat";
-    string fn_haar = "/home/johannes/work/photosort42/src/libs/haarcascade_frontalface_alt.xml";
+    string fn_haar = "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml";
 
     Mat gray_image;
-    cvtColor(face, gray_image, CV_BGR2GRAY);
+
+    if ( face.channels() > 1 )
+    {
+        cv::cvtColor(face, gray_image, CV_BGR2GRAY);
+    }
+    else
+        gray_image = face.clone();
 
     FLANDMARK_Model* model = flandmark_init(flandmarks_model_name.c_str());
 
@@ -245,22 +251,29 @@ void face_alignement::align_face( cv::Mat& face )
 
     if(landmarks.size() == 0){
         cout<<"landmarks not found on the face"<<endl;
-        exit(1);
+//        exit(1);
     }
-    Mat aligned_image;
+    else
+    {
+        Mat aligned_image;
+        std::cout << "landmarks found" << std::endl;
 
-    //align the face
-    align(gray_image,aligned_image,landmarks,aligned_landmarks);
+        //align the face
+        align(gray_image,aligned_image,landmarks,aligned_landmarks);
 
-//    STOP_TIMING(alignTimer);
-//    SHOW_TIMING(alignTimer, "Alignment of image and landmark points");
+    //    STOP_TIMING(alignTimer);
+    //    SHOW_TIMING(alignTimer, "Alignment of image and landmark points");
 
-    if(!aligned_image.empty()){
-        show_landmarks(aligned_landmarks,aligned_image,"aligned landmarks");
+        /*
+        if(!aligned_image.empty()){
+            show_landmarks(aligned_landmarks,aligned_image,"aligned landmarks");
+        }
+        */
+        face = aligned_image.clone();
     }
-
 }
 
+/*
 void face_alignement::test ()
 {
 
@@ -301,6 +314,8 @@ void face_alignement::test ()
     Mat aligned_image;
     vector<cv::Point2d> aligned_landmarks;
 
+    cv::imshow( "landmarks", gray_image );
+    waitKey(0);
     vector<cv::Point2d> landmarks = detectLandmarks(model, gray_image, Rect(r.x,r.y,r.width,r.height));
 
 //    DECLARE_TIMING(alignTimer);
@@ -327,6 +342,7 @@ void face_alignement::test ()
 //    waitKey(0);
 
 }
+*/
 
 
 /*

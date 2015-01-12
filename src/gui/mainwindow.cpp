@@ -8,11 +8,11 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    facedetect_ ( new facedetector( "hallo") ),
+    facedetect_ ( new facedetector() ),
     face_aligner_ ( ),
-    facerecognizer_eigen_ ( new facerecognizer(cv::createEigenFaceRecognizer(), "/home/johannes/Pictures/test.csv")),
-    facerecognizer_fisher_ ( new facerecognizer(cv::createFisherFaceRecognizer(), "/home/johannes/Pictures/test.csv")),
-    facerecognizer_lbp_ ( new facerecognizer(cv::createLBPHFaceRecognizer(), "/home/johannes/Pictures/test.csv"))
+    facerecognizer_eigen_ ( new facerecognizer(cv::createEigenFaceRecognizer())),
+    facerecognizer_fisher_ ( new facerecognizer(cv::createFisherFaceRecognizer())),
+    facerecognizer_lbp_ ( new facerecognizer(cv::createLBPHFaceRecognizer()))
 {
 
     ui->setupUi(this);
@@ -24,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->centralWidget->setFixedSize(this->width(), this->height());
     ui->groupBox->setDisabled(true);
     ui->pushButton_compareInput->setDisabled(true);
+    std::string file_name =  "/home/johannes/Pictures/test.csv";
+    helper::read_csv( file_name, faces_, labels_ );
 
 }
 
@@ -34,11 +36,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_sort_clicked()       //Sortierbutton
 {
+    for ( unsigned int i = 0; i < faces_.size(); ++i )
+    {
+        face_aligner_->align_face( faces_[i] );
+    }
+    facerecognizer_eigen_->train_model( faces_, labels_ );
+    facerecognizer_fisher_->train_model( faces_, labels_ );
+    facerecognizer_lbp_->train_model( faces_, labels_ );
 
-
+    /*
     comp_file_ = ui->textEdit_compareInput->toPlainText().toStdString();
     comp_img_ = cv::imread( comp_file_, CV_LOAD_IMAGE_COLOR );
     img_ = cv::imread( ui->textEdit_photoInput->toPlainText().toStdString(), CV_LOAD_IMAGE_COLOR );
+    */
     for ( unsigned int i = 0; i < input_files_.size(); ++i )
     {
         cv::Mat img;
@@ -49,11 +59,14 @@ void MainWindow::on_pushButton_sort_clicked()       //Sortierbutton
         facedetect_->detect_face( img, faces );
         for ( unsigned int j = 0; j < faces.size(); ++j )
         {
+            int label;
             face_aligner_->align_face( img );
+            facerecognizer_eigen_->recognize( img, label);
+            std::cout << label << std::endl;
         }
     }
 
-    face_aligner_->test();
+//    face_aligner_->test();
 //    face_eigen_->recognize_face( faces, comp_img_ );
 
 }

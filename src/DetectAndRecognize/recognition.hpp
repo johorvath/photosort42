@@ -33,8 +33,7 @@ class RecognitionModel      //class for using the database
 class facerecognizer
 {
 public:
-    facerecognizer(cv::Ptr <cv::FaceRecognizer> model , const std::string &path , const std::string &file_name);
-    facerecognizer(cv::Ptr <cv::FaceRecognizer> model , const std::string &file_name);
+    facerecognizer(cv::Ptr <cv::FaceRecognizer> model );
 //    ~facerecognizer();
 
     void update_model ( cv::Mat const& face, int const& label);
@@ -49,7 +48,7 @@ public:
 
     void recognize_test ();
 
-    void recognize ( std::vector <cv::Mat>& images, std::vector <int>& labels);
+    void recognize ( cv::Mat& img, int& label );
 
     cv::Ptr <cv::FaceRecognizer> model_;
 

@@ -1,20 +1,10 @@
 #include "recognition.hpp"
 
-facerecognizer::facerecognizer ( cv::Ptr <cv::FaceRecognizer> model, std::string const& file_name ) :
+facerecognizer::facerecognizer ( cv::Ptr <cv::FaceRecognizer> model ) :
     model_ (model)
 {
     model_path_ ="/home/johannes/tmp";
 }
-
-facerecognizer::facerecognizer ( cv::Ptr <cv::FaceRecognizer> model, std::string const& path, std::string const& file_name ) :
-    model_ (model)
-{
-    model_->load( path );
-    model_path_ ="/home/johannes/tmp";
-    helper::read_csv( file_name, faces_, labels_ );
-    train_model( faces_, labels_ );
-}
-
 
 /*
 facerecognizer::~facerecognizer ()
@@ -45,6 +35,11 @@ void facerecognizer::update_model( cv::Mat const& face, int const& label )
 void facerecognizer::save_model ( std::string const& path)
 {
     model_->save( path );
+}
+
+void facerecognizer::recognize( cv::Mat& img, int& label )
+{
+    label = model_->predict( img );
 }
 
 /*
