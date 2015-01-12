@@ -247,6 +247,8 @@ void face_alignement::align_face( cv::Mat& face )
     // Find face in image:
     Rect r = detect_face(face, face_cascade);
 
+    Mat aligned_image;
+
     vector<cv::Point2d> landmarks = detectLandmarks(model, gray_image, Rect(r.x,r.y,r.width,r.height));
 
     if(landmarks.size() == 0){
@@ -255,7 +257,7 @@ void face_alignement::align_face( cv::Mat& face )
     }
     else
     {
-        Mat aligned_image;
+
         std::cout << "landmarks found" << std::endl;
 
         //align the face
@@ -270,7 +272,9 @@ void face_alignement::align_face( cv::Mat& face )
         }
         */
         face = aligned_image.clone();
+
     }
+
 }
 
 /*

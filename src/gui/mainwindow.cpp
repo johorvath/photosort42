@@ -60,11 +60,16 @@ void MainWindow::on_pushButton_sort_clicked()       //Sortierbutton
         for ( unsigned int j = 0; j < faces.size(); ++j )
         {
             int label;
-            face_aligner_->align_face( img );
+            face_aligner_->align_face( faces[i] );
+
             facerecognizer_eigen_->recognize( img, label);
+            cv::imshow("label", faces[i] );
+            cv::waitKey(0);
             std::cout << label << std::endl;
         }
     }
+
+
 
 //    face_aligner_->test();
 //    face_eigen_->recognize_face( faces, comp_img_ );

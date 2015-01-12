@@ -45,7 +45,7 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
 
 
     //-- Detect faces
-    face_cascade_.detectMultiScale( frame_gray, faces_tmp, 4, 2, 0|cv::CASCADE_SCALE_IMAGE, min_size, max_size );
+    face_cascade_.detectMultiScale( frame_gray, faces_tmp, 5, 2, 0|cv::CASCADE_SCALE_IMAGE, min_size, max_size );
 
     for ( size_t i = 0; i < faces_tmp.size(); i++ )
     {
@@ -91,16 +91,16 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
     }
 
     cv::imshow( "window_name", img );
+
     cv::waitKey( 0 );
-
-
 
     std::cout << faces.size() << std::endl;
 }
 
 
+/*
 
-///** @function detectAndDisplay */
+///** @function detectAndDisplay
 void facedetector::detectAndDisplay( cv::Mat const& img )
 {
     std::vector<cv::Rect> faces;
@@ -133,3 +133,4 @@ void facedetector::detectAndDisplay( cv::Mat const& img )
     //-- Show what you got
     cv::imshow( "window_name", img );
 }
+*/
