@@ -45,6 +45,7 @@ private:
     std::string comp_file_;
     cv::Mat comp_img_;
     cv::Mat img_;
+    cv::Size size_;
     std::vector <cv::Mat> faces_;
     std::vector <int> labels_;
     facerecognizer *facerecognizer_eigen_;

@@ -10,9 +10,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     facedetect_ ( new facedetector() ),
     face_aligner_ ( ),
-    facerecognizer_eigen_ ( new facerecognizer(cv::createEigenFaceRecognizer())),
-    facerecognizer_fisher_ ( new facerecognizer(cv::createFisherFaceRecognizer())),
-    facerecognizer_lbp_ ( new facerecognizer(cv::createLBPHFaceRecognizer()))
+    facerecognizer_eigen_ ( new facerecognizer(cv::createEigenFaceRecognizer(500,50000))),
+    facerecognizer_fisher_ ( new facerecognizer(cv::createFisherFaceRecognizer(0,50000))),
+    facerecognizer_lbp_ ( new facerecognizer(cv::createLBPHFaceRecognizer(10,16,2,2,10000)))
 {
 
     ui->setupUi(this);
@@ -36,19 +36,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_sort_clicked()       //Sortierbutton
 {
+    size_ = faces_[0].size();
     for ( unsigned int i = 0; i < faces_.size(); ++i )
     {
         face_aligner_->align_face( faces_[i] );
+        cv::resize( faces_[i], faces_[i], size_ );
     }
+    size_ = faces_[0].size();
     facerecognizer_eigen_->train_model( faces_, labels_ );
     facerecognizer_fisher_->train_model( faces_, labels_ );
     facerecognizer_lbp_->train_model( faces_, labels_ );
-
-    /*
-    comp_file_ = ui->textEdit_compareInput->toPlainText().toStdString();
-    comp_img_ = cv::imread( comp_file_, CV_LOAD_IMAGE_COLOR );
-    img_ = cv::imread( ui->textEdit_photoInput->toPlainText().toStdString(), CV_LOAD_IMAGE_COLOR );
-    */
     for ( unsigned int i = 0; i < input_files_.size(); ++i )
     {
         cv::Mat img;
@@ -57,23 +54,38 @@ void MainWindow::on_pushButton_sort_clicked()       //Sortierbutton
         img = cv::imread( input_files_[i], CV_LOAD_IMAGE_COLOR );
 
         facedetect_->detect_face( img, faces );
+        if ( faces.size() > 1 )
+        {
+            std::cout << "Gruppenbild" << std::endl;
+        }
+        else if ( faces.size() == 0 )
+        {
+            std::cout << "Landschaftsbild" << std::endl;
+        }
+        else
+        {
+            std::cout << "Einzelbild" << std::endl;
+        }
         for ( unsigned int j = 0; j < faces.size(); ++j )
         {
-            int label;
+            int label = -100;
             face_aligner_->align_face( faces[i] );
 
-            facerecognizer_eigen_->recognize( img, label);
-            cv::imshow("label", faces[i] );
-            cv::waitKey(0);
-            std::cout << label << std::endl;
+            if ( faces[i].size() != size_ )
+            {
+                cv::resize( faces[i], faces[i], size_);
+            }
+
+            facerecognizer_eigen_->recognize( faces[i], label);
+            std::cout << "eigen: "<< label << std::endl;
+            label = -100;
+            facerecognizer_fisher_->recognize( faces[i], label);
+            std::cout << "fisher: "<< label << std::endl;
+            label = -100;
+            facerecognizer_lbp_->recognize( faces[i], label);
+            std::cout << "lbp: "<< label << std::endl;
         }
     }
-
-
-
-//    face_aligner_->test();
-//    face_eigen_->recognize_face( faces, comp_img_ );
-
 }
 
 

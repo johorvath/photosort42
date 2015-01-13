@@ -45,7 +45,7 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
 
 
     //-- Detect faces
-    face_cascade_.detectMultiScale( frame_gray, faces_tmp, 5, 2, 0|cv::CASCADE_SCALE_IMAGE, min_size, max_size );
+    face_cascade_.detectMultiScale( frame_gray, faces_tmp, 1.5, 2, 0|cv::CASCADE_SCALE_IMAGE, min_size, max_size );
 
     for ( size_t i = 0; i < faces_tmp.size(); i++ )
     {
@@ -64,24 +64,8 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
         {
             faces.push_back( faces_tmp[i] );
         }
-        /*
-
-        for ( unsigned int i = 0; i < eyes.size(); ++i )
-        {
-            cv::rectangle( ROI, eyes[i], cv::Scalar(255, 0, 255), 2, 8, 0 );
-        }
-        for ( unsigned int i = 0; i < eyes_glass.size(); ++i )
-        {
-            cv::rectangle( ROI, eyes_glass[i], cv::Scalar(255, 0, 0), 2, 8, 0 );
-        }
-
-
-//        cv::imshow( "roi", ROI );
-//        cv::waitKey(0);
-        */
     }
 
-    std::cout << " ";
     for ( unsigned int i = 0; i < faces.size(); ++i )
     {
         cv::Mat ROI = img( faces[i] );
@@ -90,47 +74,6 @@ void facedetector::detect_face( cv::Mat& img, std::vector < cv::Mat >& faces_mat
         cv::rectangle( img, face.tl(), face.br() , cv::Scalar(0, 255, 0), 2, 8, 0 );
     }
 
-    cv::imshow( "window_name", img );
-
-    cv::waitKey( 0 );
-
-    std::cout << faces.size() << std::endl;
 }
 
 
-/*
-
-///** @function detectAndDisplay
-void facedetector::detectAndDisplay( cv::Mat const& img )
-{
-    std::vector<cv::Rect> faces;
-    cv::Mat frame_gray;
-
-    cv::cvtColor( img, frame_gray, cv::COLOR_BGR2GRAY );
-    cv::equalizeHist( frame_gray, frame_gray );
-
-    //-- Detect faces
-    face_cascade_.detectMultiScale( frame_gray, faces, 1.5, 2, 0|cv::CASCADE_SCALE_IMAGE, cv::Size(30, 30) );
-
-    for ( size_t i = 0; i < faces.size(); i++ )
-    {
-        cv::Point center( faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2 );
-//        cv::ellipse( img, center, cv::Size( faces[i].width/2, faces[i].height/2 ), 0, 0, 360, cv::Scalar( 255, 0, 255 ), 4, 8, 0 );
-
-        cv::Mat faceROI = frame_gray( faces[i] );
-        std::vector<cv::Rect> eyes;
-
-        //-- In each face, detect eyes
-        eyes_cascade_.detectMultiScale( faceROI, eyes, 1.1, 2, 0 |cv::CASCADE_SCALE_IMAGE, cv::Size(30, 30) );
-
-        for ( size_t j = 0; j < eyes.size(); j++ )
-        {
-            cv::Point eye_center( faces[i].x + eyes[j].x + eyes[j].width/2, faces[i].y + eyes[j].y + eyes[j].height/2 );
-            int radius = cvRound( (eyes[j].width + eyes[j].height)*0.25 );
-//          cv::circle( img, eye_center, radius, cv::Scalar( 255, 0, 0 ), 4, 8, 0 );
-        }
-    }
-    //-- Show what you got
-    cv::imshow( "window_name", img );
-}
-*/
